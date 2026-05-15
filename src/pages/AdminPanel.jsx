@@ -7,6 +7,7 @@ function AdminPanel() {
   const [activeTab, setActiveTab] = useState('medicines')
   const [medicines, setMedicines] = useState([])
   const [orders, setOrders] = useState([])
+  const [prescriptions, setPrescriptions] = useState([])
   const [newMedicine, setNewMedicine] = useState({ name: '', category: '', price: '', stock: '' })
 
   const handleLogin = () => {
@@ -14,7 +15,7 @@ function AdminPanel() {
       setIsAdmin(true)
       setError('')
     } else {
-      setError('❌ Wrong password!')
+      setError('Wrong password!')
     }
   }
 
@@ -22,11 +23,16 @@ function AdminPanel() {
     if (isAdmin) {
       fetch('http://localhost:8080/api/medicines')
         .then(res => res.json())
-        .then(data => setMedicines(data))
-
+        .then(data => setMedicines(Array.isArray(data) ? data : []))
+        .catch(() => setMedicines([]))
       fetch('http://localhost:8080/api/orders')
         .then(res => res.json())
-        .then(data => setOrders(data))
+        .then(data => setOrders(Array.isArray(data) ? data : []))
+        .catch(() => setOrders([]))
+      fetch('http://localhost:8080/api/prescriptions')
+        .then(res => res.json())
+        .then(data => setPrescriptions(Array.isArray(data) ? data : []))
+        .catch(() => setPrescriptions([]))
     }
   }, [isAdmin])
 
@@ -58,35 +64,39 @@ function AdminPanel() {
       .then(updated => setOrders(orders.map(o => o.id === id ? updated : o)))
   }
 
+  const verifyPrescription = (id) => {
+    fetch(`http://localhost:8080/api/prescriptions/${id}/verify`, { method: 'PUT' })
+      .then(res => res.json())
+      .then(updated => setPrescriptions(prescriptions.map(p => p.id === id ? updated : p)))
+  }
+
+  const rejectPrescription = (id) => {
+    fetch(`http://localhost:8080/api/prescriptions/${id}/reject`, { method: 'PUT' })
+      .then(res => res.json())
+      .then(updated => setPrescriptions(prescriptions.map(p => p.id === id ? updated : p)))
+  }
+
   if (!isAdmin) {
     return (
       <div style={{ maxWidth: '400px', margin: '100px auto', padding: '40px', boxShadow: '0 0 20px rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'center' }}>
-        <h2 style={{ color: '#2c7be5' }}>👨‍💼 Admin Access</h2>
+        <h2 style={{ color: '#2c7be5' }}>Admin Access</h2>
         <p style={{ color: '#777' }}>Enter admin password to continue</p>
         <input type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '10px', marginTop: '15px', marginBottom: '10px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button onClick={handleLogin} style={{ width: '100%', padding: '12px', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer', marginTop: '10px' }}>
-          Login as Admin
-        </button>
+        <button onClick={handleLogin} style={{ width: '100%', padding: '12px', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer', marginTop: '10px' }}>Login as Admin</button>
       </div>
     )
   }
 
   return (
     <div style={{ padding: '30px' }}>
-      <h2 style={{ color: '#2c7be5' }}>👨‍💼 Admin Panel</h2>
-
-      {/* Tabs */}
+      <h2 style={{ color: '#2c7be5' }}>Admin Panel</h2>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
-        <button onClick={() => setActiveTab('medicines')} style={{ padding: '10px 25px', background: activeTab === 'medicines' ? '#2c7be5' : '#eee', color: activeTab === 'medicines' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>
-          💊 Medicines
-        </button>
-        <button onClick={() => setActiveTab('orders')} style={{ padding: '10px 25px', background: activeTab === 'orders' ? '#2c7be5' : '#eee', color: activeTab === 'orders' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>
-          📦 Orders
-        </button>
+        <button onClick={() => setActiveTab('medicines')} style={{ padding: '10px 25px', background: activeTab === 'medicines' ? '#2c7be5' : '#eee', color: activeTab === 'medicines' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Medicines</button>
+        <button onClick={() => setActiveTab('orders')} style={{ padding: '10px 25px', background: activeTab === 'orders' ? '#2c7be5' : '#eee', color: activeTab === 'orders' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Orders</button>
+        <button onClick={() => setActiveTab('prescriptions')} style={{ padding: '10px 25px', background: activeTab === 'prescriptions' ? '#2c7be5' : '#eee', color: activeTab === 'prescriptions' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Prescriptions</button>
       </div>
 
-      {/* Medicines Tab */}
       {activeTab === 'medicines' && (
         <div>
           <div style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0,0,0,0.1)', marginBottom: '30px' }}>
@@ -97,9 +107,8 @@ function AdminPanel() {
               <input placeholder="Price" type="number" value={newMedicine.price} onChange={(e) => setNewMedicine({ ...newMedicine, price: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
               <input placeholder="Stock" type="number" value={newMedicine.stock} onChange={(e) => setNewMedicine({ ...newMedicine, stock: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
             </div>
-            <button onClick={handleAdd} style={{ padding: '10px 25px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>+ Add Medicine</button>
+            <button onClick={handleAdd} style={{ padding: '10px 25px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Add Medicine</button>
           </div>
-
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: '#2c7be5', color: 'white' }}>
@@ -127,7 +136,6 @@ function AdminPanel() {
         </div>
       )}
 
-      {/* Orders Tab */}
       {activeTab === 'orders' && (
         <div>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -151,9 +159,7 @@ function AdminPanel() {
                   <td style={{ padding: '12px' }}>{order.address}</td>
                   <td style={{ padding: '12px' }}>Rs. {order.totalAmount}</td>
                   <td style={{ padding: '12px' }}>
-                    <span style={{ padding: '5px 10px', borderRadius: '5px', background: order.status === 'Delivered' ? '#28a745' : order.status === 'Processing' ? '#ffc107' : '#dc3545', color: 'white', fontSize: '12px' }}>
-                      {order.status}
-                    </span>
+                    <span style={{ padding: '5px 10px', borderRadius: '5px', background: order.status === 'Delivered' ? '#28a745' : order.status === 'Processing' ? '#ffc107' : '#dc3545', color: 'white', fontSize: '12px' }}>{order.status}</span>
                   </td>
                   <td style={{ padding: '12px' }}>
                     <select onChange={(e) => updateOrderStatus(order.id, e.target.value)} defaultValue={order.status} style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}>
@@ -167,6 +173,51 @@ function AdminPanel() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {activeTab === 'prescriptions' && (
+        <div>
+          {prescriptions.length === 0 ? (
+            <p style={{ color: '#777', textAlign: 'center', padding: '50px' }}>No prescriptions uploaded yet!</p>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ background: '#2c7be5', color: 'white' }}>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>ID</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Customer</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Email</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>File</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Status</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {prescriptions.map(p => (
+                  <tr key={p.id} style={{ borderBottom: '1px solid #eee' }}>
+                    <td style={{ padding: '12px' }}>#{p.id}</td>
+                    <td style={{ padding: '12px' }}>{p.customerName}</td>
+                    <td style={{ padding: '12px' }}>{p.customerEmail}</td>
+                    <td style={{ padding: '12px' }}>
+                      <a href={'http://localhost:8080/api/prescriptions/file/' + p.fileName} target="_blank" rel="noreferrer" style={{ color: '#2c7be5', textDecoration: 'none', fontWeight: 'bold' }}>View File</a>
+                    </td>
+                    <td style={{ padding: '12px' }}>
+                      <span style={{ padding: '5px 10px', borderRadius: '5px', background: p.status === 'VERIFIED' ? '#28a745' : p.status === 'REJECTED' ? '#dc3545' : '#ffc107', color: 'white', fontSize: '12px' }}>{p.status}</span>
+                    </td>
+                    <td style={{ padding: '12px', display: 'flex', gap: '5px' }}>
+                      {p.status === 'PENDING' && (
+                        <span>
+                          <button onClick={() => verifyPrescription(p.id)} style={{ padding: '8px 15px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginRight: '5px' }}>Verify</button>
+                          <button onClick={() => rejectPrescription(p.id)} style={{ padding: '8px 15px', background: 'red', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Reject</button>
+                        </span>
+                      )}
+                      {p.status !== 'PENDING' && <span style={{ color: '#777' }}>Done</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
     </div>

@@ -26,10 +26,11 @@ function Login() {
       .then(data => {
         setLoading(false)
         if (data.message === 'Login successful!') {
-          setMessage(`✅ Welcome ${data.name}!`)
-          localStorage.setItem('user', JSON.stringify(data))
-          setTimeout(() => navigate('/'), 1500)
-        } else {
+           setMessage(`✅ Welcome ${data.name}!`)
+           localStorage.setItem('user', JSON.stringify(data))
+           localStorage.setItem('token', data.token)
+           setTimeout(() => navigate('/'), 1500)
+          } else {
           setMessage('❌ Invalid credentials!')
         }
       })
@@ -41,7 +42,7 @@ function Login() {
 
   return (
     <div style={{ maxWidth: '400px', margin: '60px auto', padding: '40px', boxShadow: '0 0 20px rgba(0,0,0,0.1)', borderRadius: '10px' }}>
-      <h2 style={{ textAlign: 'center', color: '#2c7be5' }}>Login</h2>
+      <h2 style={{ textAlign: 'center', color: '#5b83ea' }}>Login</h2>
 
       <div style={{ display: 'flex', marginTop: '20px', marginBottom: '20px' }}>
         <button onClick={() => setLoginType('email')} style={{ flex: 1, padding: '10px', background: loginType === 'email' ? '#2c7be5' : '#eee', color: loginType === 'email' ? 'white' : 'black', border: 'none', borderRadius: '5px 0 0 5px', cursor: 'pointer' }}>
