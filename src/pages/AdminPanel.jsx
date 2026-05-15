@@ -21,15 +21,15 @@ function AdminPanel() {
 
   useEffect(() => {
     if (isAdmin) {
-      fetch('https://pharmacy-backend-production-9565.up.railway.app/api/medicines')
+      fetch('https://pharmacy-backend-1-41kr.onrender.com/api/medicines')
         .then(res => res.json())
         .then(data => setMedicines(Array.isArray(data) ? data : []))
         .catch(() => setMedicines([]))
-      fetch('https://pharmacy-backend-production-9565.up.railway.app/api/orders')
+      fetch('https://pharmacy-backend-1-41kr.onrender.com/api/orders')
         .then(res => res.json())
         .then(data => setOrders(Array.isArray(data) ? data : []))
         .catch(() => setOrders([]))
-      fetch('https://pharmacy-backend-production-9565.up.railway.app/api/prescriptions')
+      fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions')
         .then(res => res.json())
         .then(data => setPrescriptions(Array.isArray(data) ? data : []))
         .catch(() => setPrescriptions([]))
@@ -41,7 +41,7 @@ function AdminPanel() {
       alert('Please fill all fields!')
       return
     }
-    fetch('https://pharmacy-backend-production-9565.up.railway.app/api/medicines', {
+    fetch('https://pharmacy-backend-1-41kr.onrender.com/api/medicines', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newMedicine)
@@ -54,24 +54,24 @@ function AdminPanel() {
   }
 
   const handleDelete = (id) => {
-    fetch(`https://pharmacy-backend-production-9565.up.railway.app/api/medicines/${id}`, { method: 'DELETE' })
+    fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/medicines/${id}`, { method: 'DELETE' })
       .then(() => setMedicines(medicines.filter(m => m.id !== id)))
   }
 
   const updateOrderStatus = (id, status) => {
-    fetch(`https://pharmacy-backend-production-9565.up.railway.app/api/orders/${id}/status?status=${status}`, { method: 'PUT' })
+    fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/orders/${id}/status?status=${status}`, { method: 'PUT' })
       .then(res => res.json())
       .then(updated => setOrders(orders.map(o => o.id === id ? updated : o)))
   }
 
   const verifyPrescription = (id) => {
-    fetch(`https://pharmacy-backend-production-9565.up.railway.app/api/prescriptions/${id}/verify`, { method: 'PUT' })
+    fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/${id}/verify`, { method: 'PUT' })
       .then(res => res.json())
       .then(updated => setPrescriptions(prescriptions.map(p => p.id === id ? updated : p)))
   }
 
   const rejectPrescription = (id) => {
-    fetch(`https://pharmacy-backend-production-9565.up.railway.app/api/prescriptions/${id}/reject`, { method: 'PUT' })
+    fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/${id}/reject`, { method: 'PUT' })
       .then(res => res.json())
       .then(updated => setPrescriptions(prescriptions.map(p => p.id === id ? updated : p)))
   }
@@ -199,7 +199,7 @@ function AdminPanel() {
                     <td style={{ padding: '12px' }}>{p.customerName}</td>
                     <td style={{ padding: '12px' }}>{p.customerEmail}</td>
                     <td style={{ padding: '12px' }}>
-                      <a href={'https://pharmacy-backend-production-9565.up.railway.app/api/prescriptions/file/' + p.fileName} target="_blank" rel="noreferrer" style={{ color: '#2c7be5', textDecoration: 'none', fontWeight: 'bold' }}>View File</a>
+                      <a href={'https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/file/' + p.fileName} target="_blank" rel="noreferrer" style={{ color: '#2c7be5', textDecoration: 'none', fontWeight: 'bold' }}>View File</a>
                     </td>
                     <td style={{ padding: '12px' }}>
                       <span style={{ padding: '5px 10px', borderRadius: '5px', background: p.status === 'VERIFIED' ? '#28a745' : p.status === 'REJECTED' ? '#dc3545' : '#ffc107', color: 'white', fontSize: '12px' }}>{p.status}</span>

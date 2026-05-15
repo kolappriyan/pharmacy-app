@@ -16,7 +16,7 @@ function OrderTracking() {
 
   const fetchOrder = (id) => {
     setLoading(true)
-    fetch(`https://pharmacy-backend-production-9565.up.railway.app/api/orders/${id}`)
+    fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/orders/${id}`)
       .then(res => res.json())
       .then(data => {
         setOrder(data)

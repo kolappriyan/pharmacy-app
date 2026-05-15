@@ -25,7 +25,7 @@ function Medicines() {
   const { addToCart } = useCart()
 
   useEffect(() => {
-    fetch('https://pharmacy-backend-production-9565.up.railway.app/api/medicines')
+    fetch('https://pharmacy-backend-1-41kr.onrender.com/api/medicines')
       .then(res => res.json())
       .then(data => setMedicines(data))
   }, [])

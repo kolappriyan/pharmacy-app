@@ -49,7 +49,7 @@ function Cart() {
       formData.append('customerName', form.customerName)
       formData.append('customerEmail', form.customerEmail)
 
-      fetch('https://pharmacy-backend-production-9565.up.railway.app/api/prescriptions/upload', {
+      fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/upload', {
         method: 'POST',
         body: formData
       }).then(() => console.log('Prescription uploaded!'))
@@ -63,7 +63,7 @@ function Cart() {
       totalAmount: total
     }
 
-    fetch('https://pharmacy-backend-production-9565.up.railway.app/api/orders', {
+    fetch('https://pharmacy-backend-1-41kr.onrender.com/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(order)

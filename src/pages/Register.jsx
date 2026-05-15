@@ -25,7 +25,7 @@ function Register() {
     }
 
     setLoading(true)
-    fetch('https://pharmacy-backend-production-9565.up.railway.app/api/users/register', {
+    fetch('https://pharmacy-backend-1-41kr.onrender.com/api/users/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

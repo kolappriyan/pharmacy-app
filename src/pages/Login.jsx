@@ -17,7 +17,7 @@ function Login() {
     }
 
     setLoading(true)
-    fetch('https://pharmacy-backend-production-9565.up.railway.app/api/users/login', {
+    fetch('https://pharmacy-backend-1-41kr.onrender.com/api/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, phone, password })
