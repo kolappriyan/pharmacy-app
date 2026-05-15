@@ -25,7 +25,7 @@ function Register() {
     }
 
     setLoading(true)
-    fetch('http://localhost:8080/api/users/register', {
+    fetch('https://pharmacy-backend-production-9565.up.railway.app/api/users/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
