@@ -8,7 +8,7 @@ function AdminPanel() {
   const [medicines, setMedicines] = useState([])
   const [orders, setOrders] = useState([])
   const [prescriptions, setPrescriptions] = useState([])
-  const [newMedicine, setNewMedicine] = useState({ name: '', category: '', price: '', stock: '' })
+  const [newMedicine, setNewMedicine] = useState({ name: '', category: '', price: '', stock: '', prescriptionRequired: false })
 
   const handleLogin = () => {
     if (password === 'admin123') {
@@ -49,7 +49,7 @@ function AdminPanel() {
       .then(res => res.json())
       .then(data => {
         setMedicines([...medicines, data])
-        setNewMedicine({ name: '', category: '', price: '', stock: '' })
+        setNewMedicine({ name: '', category: '', price: '', stock: '', prescriptionRequired: false })
       })
   }
 
@@ -107,6 +107,15 @@ function AdminPanel() {
               <input placeholder="Price" type="number" value={newMedicine.price} onChange={(e) => setNewMedicine({ ...newMedicine, price: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
               <input placeholder="Stock" type="number" value={newMedicine.stock} onChange={(e) => setNewMedicine({ ...newMedicine, stock: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
             </div>
+           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px' }}>
+            <input
+            type="checkbox"
+            id="prescription"
+            checked={newMedicine.prescriptionRequired}
+            onChange={(e) => setNewMedicine({ ...newMedicine, prescriptionRequired: e.target.checked })}
+            />
+            <label htmlFor="prescription" style={{ fontSize: '14px' }}>⚠️ Prescription Required</label>
+            </div> 
             <button onClick={handleAdd} style={{ padding: '10px 25px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Add Medicine</button>
           </div>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
