@@ -1,7 +1,7 @@
 function Home() {
   return (
     <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-    <h2 style={{ color: '#666262', margin: 0 , fontWeight:"bold"}}>Welcome to PharmaCare</h2>
+    <h2 style={{ color: '#666262', margin: 0 , fontWeight:"bold", fontSize:"24px"}}>Welcome to PharmaCare</h2>
       <p style={{ fontSize: '20px', color: '#b0a7a7', marginTop: '20px' }}>
         Order medicines online and get them delivered to your doorstep! Browse our wide selection of medicines, track your orders, and enjoy a seamless shopping experience with PharmaCare. Your health is our priority!
       </p>
