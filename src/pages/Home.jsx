@@ -2,8 +2,8 @@ function Home() {
   return (
     <div style={{ textAlign: 'center', padding: '60px 20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <center><img src="/healthcare1.png" alt="PharmaCare" style={{ width: '35px', height: '35px' }} /></center>
-        <h2 style={{ color: 'black', margin: 0 }}>Welcome to PharmaCare</h2>
+        <center><img src="/healthcare1.png" alt="PharmaCare" style={{ width: '35px', height: '35px' }} />
+        <h2 style={{ color: 'white', margin: 0 }}>Welcome to PharmaCare</h2></center>
       </div>
       <p style={{ fontSize: '20px', color: '#b0a7a7', marginTop: '20px' }}>
         Order medicines online and get them delivered to your doorstep! Browse our wide selection of medicines, track your orders, and enjoy a seamless shopping experience with PharmaCare. Your health is our priority!
