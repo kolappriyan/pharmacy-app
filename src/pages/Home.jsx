@@ -2,7 +2,7 @@ function Home() {
   return (
     <div style={{ textAlign: 'center', padding: '60px 20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <img src="/healthcare1.png" alt="PharmaCare" style={{ width: '35px', height: '35px' }} />
+        <center><img src="/healthcare1.png" alt="PharmaCare" style={{ width: '35px', height: '35px' }} /></center>
         <h2 style={{ color: 'black', margin: 0 }}>Welcome to PharmaCare</h2>
       </div>
       <p style={{ fontSize: '20px', color: '#b0a7a7', marginTop: '20px' }}>
