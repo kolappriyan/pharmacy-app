@@ -24,7 +24,7 @@ function Navbar({ darkMode, setDarkMode }) {
   return (
     <nav style={{ background: '#2c7be5', padding: '15px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <img src="/pharmacy.png" alt="PharmaCare" style={{ width: '35px', height: '35px' }} />
+        <img src="/healthcare1.png" alt="PharmaCare" style={{ width: '35px', height: '35px' }} />
         <h2 style={{ color: 'white', margin: 0 }}>PharmaCare</h2>
       </div>
       <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
