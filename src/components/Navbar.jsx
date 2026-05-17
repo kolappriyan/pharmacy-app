@@ -67,7 +67,7 @@ function Navbar({ darkMode, setDarkMode }) {
       <nav style={navStyle}>
         {/* Logo */}
         <Link to="/" style={logoStyle}>
-          <img src="/healthcare1.png" alt="PharmaCare"
+          <img src="/medical.png" alt="PharmaCare"
             style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid white' }} />
           <span style={{ color: 'white', fontWeight: '800', fontSize: '20px', letterSpacing: '0.5px' }}>
              PharmaCare
