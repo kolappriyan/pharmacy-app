@@ -70,7 +70,7 @@ function Navbar({ darkMode, setDarkMode }) {
           <img src="/healthcare1.png" alt="PharmaCare"
             style={{ width: '38px', height: '38px', borderRadius: '50%', border: '2px solid white' }} />
           <span style={{ color: 'white', fontWeight: '800', fontSize: '20px', letterSpacing: '0.5px' }}>
-            💊 PharmaCare
+             PharmaCare
           </span>
         </Link>
 
