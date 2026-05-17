@@ -17,7 +17,18 @@ function Cart() {
     address: ''
   })
 
-  const isLoggedIn = !!localStorage.getItem('token')
+  const isLoggedIn = () => {
+  const token = localStorage.getItem('token')
+  const userStr = localStorage.getItem('user')
+  if (token) return true
+  if (userStr) {
+    try {
+      const user = JSON.parse(userStr)
+      return !!(user.token || user.id)
+    } catch { return false }
+  }
+  return false
+}
 
   const validCoupons = { 'PHARMA10': 10, 'SAVE20': 20, 'HEALTH15': 15 }
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -38,7 +49,7 @@ function Cart() {
 
   const placeOrder = async () => {
     // Login check
-    if (!isLoggedIn) {
+    if (!isLoggedIn()) {
       alert('⚠️ Please login or register to place an order!')
       window.location.href = '/login'
       return
@@ -130,7 +141,7 @@ function Cart() {
       <h2 style={{ color: '#2c7be5' }}>🛒 My Cart</h2>
 
       {/* Login Warning Banner */}
-      {!isLoggedIn && (
+      {!isLoggedIn() && (
         <div style={{
           background: '#fff3cd',
           border: '2px solid #ffc107',
