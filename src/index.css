@@ -109,3 +109,21 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+/* Navbar Responsive */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none !important;
+  }
+  .hamburger {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu {
+    display: none !important;
+  }
+  .hamburger {
+    display: none !important;
+  }
+}
