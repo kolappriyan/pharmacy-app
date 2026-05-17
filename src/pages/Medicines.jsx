@@ -95,10 +95,10 @@ function Medicines() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
         {filtered.map(medicine => (
           <div key={medicine.id} style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0,0,0,0.1)', textAlign: 'center', background: 'white' }}>
-            <img
-              src={medicineImages[medicine.category] || 'https://cdn-icons-png.flaticon.com/512/2991/2991231.png'}
-              alt={medicine.name}
-              style={{ width: '70px', height: '70px', marginBottom: '10px' }}
+           <img
+            src={getMedicineImage(medicine.name)}
+            alt={medicine.name}
+            style={{ width: '70px', height: '70px', marginBottom: '10px' }}
             />
             <h3 style={{ color: '#333', fontSize: '16px', margin: '5px 0' }}>{medicine.name}</h3>
             <p style={{ color: '#888888', fontSize: '13px' }}>{medicine.category}</p>
