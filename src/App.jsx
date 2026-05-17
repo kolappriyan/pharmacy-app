@@ -60,7 +60,7 @@ function App() {
       )}
 
       <div style={{
-        transition: 'all 0.5s ease',
+        transition: 'all 1.0s ease',
         minHeight: '100vh',
         background: darkMode
           ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
