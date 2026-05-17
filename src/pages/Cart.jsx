@@ -9,6 +9,7 @@ function Cart() {
   const [message, setMessage] = useState('')
   const [orderPlaced, setOrderPlaced] = useState(false)
   const [prescription, setPrescription] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     customerName: '',
     customerEmail: '',
@@ -33,7 +34,7 @@ function Cart() {
     }
   }
 
-  const placeOrder = () => {
+  const placeOrder = async () => {
     if (!form.customerName || !form.customerEmail || !form.customerPhone || !form.address) {
       alert('Please fill all fields!')
       return
@@ -43,38 +44,57 @@ function Cart() {
       return
     }
 
-    if (prescription) {
-      const formData = new FormData()
-      formData.append('file', prescription)
-      formData.append('customerName', form.customerName)
-      formData.append('customerEmail', form.customerEmail)
+    setLoading(true)
 
-      fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/upload', {
+    try {
+      // Step 1: Place order first
+      const order = {
+        customerName: form.customerName,
+        customerEmail: form.customerEmail,
+        customerPhone: form.customerPhone,
+        address: form.address,
+        totalAmount: total
+      }
+
+      const orderRes = await fetch('https://pharmacy-backend-1-41kr.onrender.com/api/orders', {
         method: 'POST',
-        body: formData
-      }).then(() => console.log('Prescription uploaded!'))
-    }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      })
 
-    const order = {
-      customerName: form.customerName,
-      customerEmail: form.customerEmail,
-      customerPhone: form.customerPhone,
-      address: form.address,
-      totalAmount: total
-    }
+      if (!orderRes.ok) throw new Error('Order failed')
+      const orderData = await orderRes.json()
+      localStorage.setItem('lastOrderId', orderData.id)
 
-    fetch('https://pharmacy-backend-1-41kr.onrender.com/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(order)
-    })
-      .then(res => res.json())
-      .then(data => {
+      // Step 2: Upload prescription after order
+      if (prescription) {
+        const formData = new FormData()
+        formData.append('file', prescription)
+        formData.append('customerName', form.customerName)
+        formData.append('customerEmail', form.customerEmail)
+        formData.append('orderId', orderData.id)
+
+        const presRes = await fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/upload', {
+          method: 'POST',
+          body: formData
+        })
+
+        if (presRes.ok) {
+          console.log('✅ Prescription uploaded!')
+        } else {
+          console.error('❌ Prescription upload failed')
+        }
+      }
+
       clearCart()
       setOrderPlaced(true)
-      localStorage.setItem('lastOrderId', data.id)
-    })
-      .catch(() => alert('Order failed!'))
+
+    } catch (err) {
+      alert('Order failed! Please try again.')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (cartItems.length === 0 && !orderPlaced) {
@@ -96,7 +116,7 @@ function Cart() {
         <p style={{ color: '#766f6f' }}>Your medicines will be delivered soon!</p>
         <a href="/" style={{ display: 'inline-block', marginTop: '20px', padding: '12px 30px', background: '#2c7be5', color: 'white', borderRadius: '5px', textDecoration: 'none' }}>
           Back to Home
-         </a>
+        </a>
         <a href="/track-order" style={{ display: 'inline-block', marginTop: '20px', marginLeft: '10px', padding: '12px 30px', background: '#28a745', color: 'white', borderRadius: '5px', textDecoration: 'none' }}>
           Track Order
         </a>
@@ -127,7 +147,7 @@ function Cart() {
       {hasPrescriptionItems && (
         <div style={{ padding: '25px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)', marginTop: '20px', background: '#fff3cd' }}>
           <h3 style={{ color: '#917830' }}>⚠️ Prescription Required</h3>
-          <p style={{ color: '#5b4912', fontSize: '16px' }}>Some medicines in your cart require a prescription. Please upload a valid prescription with doctor's seal.</p>
+          <p style={{ color: '#5b4912', fontSize: '16px' }}>Some medicines require a prescription. Please upload a valid prescription with doctor's seal.</p>
           <input
             type="file"
             accept="image/*,.pdf"
@@ -150,14 +170,17 @@ function Cart() {
         <h3>Total: Rs. {total}</h3>
       </div>
 
-      <div style={{ marginTop: '30px', padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ marginTop: '30px', padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0,0,0,0.1)' }}>
         <h3 style={{ color: '#d97731', fontSize: '25px' }}>📦 Delivery Details</h3>
         <input type="text" placeholder="Full Name" value={form.customerName} onChange={(e) => setForm({ ...form, customerName: e.target.value })} style={{ width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
         <input type="email" placeholder="Email" value={form.customerEmail} onChange={(e) => setForm({ ...form, customerEmail: e.target.value })} style={{ width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
         <input type="tel" placeholder="Phone Number" value={form.customerPhone} onChange={(e) => setForm({ ...form, customerPhone: e.target.value })} style={{ width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
         <textarea placeholder="Delivery Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} style={{ width: '100%', padding: '10px', marginBottom: '15px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box', height: '80px' }} />
-        <button onClick={placeOrder} style={{ width: '100%', padding: '12px', background: '#b79832', color: 'white', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer' }}>
-          Place Order
+        <button
+          onClick={placeOrder}
+          disabled={loading}
+          style={{ width: '100%', padding: '12px', background: loading ? '#999' : '#b79832', color: 'white', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: loading ? 'not-allowed' : 'pointer' }}>
+          {loading ? '⏳ Placing Order...' : 'Place Order'}
         </button>
       </div>
     </div>
