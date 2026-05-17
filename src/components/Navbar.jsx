@@ -136,7 +136,7 @@ function Navbar({ darkMode, setDarkMode }) {
             onMouseEnter={e => e.currentTarget.style.transform = 'rotate(20deg) scale(1.1)'}
             onMouseLeave={e => e.currentTarget.style.transform = 'rotate(0deg) scale(1)'}
             >
-              {darkMode ? '🌝' : '🌚'}
+              {darkMode ? '☀️' : '🌙'}
           </button>
         </div>
 
@@ -193,7 +193,7 @@ function Navbar({ darkMode, setDarkMode }) {
               style={{ width: '100%', padding: '12px', background: darkMode ? '#fff9c4' : '#1a1a2e',
                 color: darkMode ? '#333' : '#ffd54f', border: 'none', borderRadius: '10px',
                 cursor: 'pointer', fontSize: '16px', fontWeight: '700' }}>
-              {darkMode ? '🌝 Light Mode' : '🌚 Dark Mode'}
+              {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
             </button>
           </div>
         </div>

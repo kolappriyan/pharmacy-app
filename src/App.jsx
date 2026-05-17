@@ -55,7 +55,7 @@ function App() {
           animation: 'popIcon 0.4s ease forwards',
           pointerEvents: 'none'
         }}>
-          {darkMode ? '🌝' : '🌚'}
+          {darkMode ? '☀️' : '🌙'}
         </div>
       )}
 
