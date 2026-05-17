@@ -34,11 +34,26 @@ function Medicines() {
   const [added, setAdded] = useState({})
   const { addToCart } = useCart()
 
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     fetch('https://pharmacy-backend-1-41kr.onrender.com/api/medicines')
-      .then(res => res.json())
-      .then(data => setMedicines(data))
+     .then(res => res.json())
+     .then(data => {
+       setMedicines(Array.isArray(data) ? data : [])
+       setLoading(false)
+    })
+    .catch(() => {
+      setLoading(false)
+    })
   }, [])
+  if (loading) {
+   return (
+    <div style={{ textAlign: 'center', padding: '80px' }}>
+      <h2 style={{ color: '#2c7be5' }}>💊 Loading Medicines...</h2>
+      <p style={{ color: '#777' }}>Please wait, server is starting up (may take 50 seconds)</p>
+    </div>
+    )
+  }
 
   const categories = ['All', ...new Set(medicines.map(m => m.category))]
 
