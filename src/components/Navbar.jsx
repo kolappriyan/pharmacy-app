@@ -68,7 +68,7 @@ function Navbar({ darkMode, setDarkMode }) {
         {/* Logo */}
         <Link to="/" style={logoStyle}>
           <img src="/healthcare1.png" alt="PharmaCare"
-            style={{ width: '38px', height: '38px', borderRadius: '50%', border: '2px solid white' }} />
+            style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid white' }} />
           <span style={{ color: 'white', fontWeight: '800', fontSize: '20px', letterSpacing: '0.5px' }}>
              PharmaCare
           </span>
@@ -115,12 +115,28 @@ function Navbar({ darkMode, setDarkMode }) {
                 padding: '7px 16px', borderRadius: '20px' }}>Register</Link>
             </>
           )}
-
-          <button onClick={() => setDarkMode(!darkMode)}
-            style={{ padding: '7px 14px', background: darkMode ? '#fff9c4' : '#1a1a2e',
-              color: darkMode ? '#333' : '#ffd54f', border: 'none', borderRadius: '20px',
-              cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}>
-            {darkMode ? '☀️' : '🌙'}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            style={{
+              padding: '7px 14px',
+              background: darkMode
+              ? 'linear-gradient(135deg, #fff9c4, #ffd54f)'
+              : 'linear-gradient(135deg, #1a1a2e, #0f3460)',
+              color: darkMode ? '#333' : '#ffd54f',
+              border: 'none',
+              borderRadius: '20px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              transition: 'all 0.3s ease',
+              boxShadow: darkMode
+              ? '0 0 15px rgba(255,213,79,0.5)'
+              : '0 0 15px rgba(106,27,154,0.5)'
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'rotate(20deg) scale(1.1)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'rotate(0deg) scale(1)'}
+            >
+              {darkMode ? '🌝' : '🌚'}
           </button>
         </div>
 
@@ -177,7 +193,7 @@ function Navbar({ darkMode, setDarkMode }) {
               style={{ width: '100%', padding: '12px', background: darkMode ? '#fff9c4' : '#1a1a2e',
                 color: darkMode ? '#333' : '#ffd54f', border: 'none', borderRadius: '10px',
                 cursor: 'pointer', fontSize: '16px', fontWeight: '700' }}>
-              {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+              {darkMode ? '🌝 Light Mode' : '🌚 Dark Mode'}
             </button>
           </div>
         </div>
