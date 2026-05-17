@@ -22,17 +22,11 @@ function AdminPanel() {
   useEffect(() => {
     if (isAdmin) {
       fetch('https://pharmacy-backend-1-41kr.onrender.com/api/medicines')
-        .then(res => res.json())
-        .then(data => setMedicines(Array.isArray(data) ? data : []))
-        .catch(() => setMedicines([]))
+        .then(res => res.json()).then(data => setMedicines(Array.isArray(data) ? data : [])).catch(() => setMedicines([]))
       fetch('https://pharmacy-backend-1-41kr.onrender.com/api/orders')
-        .then(res => res.json())
-        .then(data => setOrders(Array.isArray(data) ? data : []))
-        .catch(() => setOrders([]))
+        .then(res => res.json()).then(data => setOrders(Array.isArray(data) ? data : [])).catch(() => setOrders([]))
       fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions')
-        .then(res => res.json())
-        .then(data => setPrescriptions(Array.isArray(data) ? data : []))
-        .catch(() => setPrescriptions([]))
+        .then(res => res.json()).then(data => setPrescriptions(Array.isArray(data) ? data : [])).catch(() => setPrescriptions([]))
     }
   }, [isAdmin])
 
@@ -45,15 +39,14 @@ function AdminPanel() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newMedicine)
+    }).then(res => res.json()).then(data => {
+      setMedicines([...medicines, data])
+      setNewMedicine({ name: '', category: '', price: '', stock: '', prescriptionRequired: false })
     })
-      .then(res => res.json())
-      .then(data => {
-        setMedicines([...medicines, data])
-        setNewMedicine({ name: '', category: '', price: '', stock: '', prescriptionRequired: false })
-      })
   }
 
   const handleDelete = (id) => {
+    if (!window.confirm('Delete this medicine?')) return
     fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/medicines/${id}`, { method: 'DELETE' })
       .then(() => setMedicines(medicines.filter(m => m.id !== id)))
   }
@@ -78,155 +71,225 @@ function AdminPanel() {
 
   if (!isAdmin) {
     return (
-      <div style={{ maxWidth: '400px', margin: '100px auto', padding: '40px', boxShadow: '0 0 20px rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'center' }}>
-        <h2 style={{ color: '#2c7be5' }}>Admin Access</h2>
-        <p style={{ color: '#777' }}>Enter admin password to continue</p>
-        <input type="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '10px', marginTop: '15px', marginBottom: '10px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box' }} />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button onClick={handleLogin} style={{ width: '100%', padding: '12px', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer', marginTop: '10px' }}>Login as Admin</button>
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #1a73e8, #6a1b9a)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '20px'
+      }}>
+        <div style={{
+          background: 'white', borderRadius: '20px', padding: '40px',
+          width: '100%', maxWidth: '400px', textAlign: 'center',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+        }}>
+          <div style={{ fontSize: '50px', marginBottom: '10px' }}>🔐</div>
+          <h2 style={{ color: '#1a73e8', margin: '0 0 5px' }}>Admin Panel</h2>
+          <p style={{ color: '#777', marginBottom: '25px' }}>Enter password to continue</p>
+          <input
+            type="password"
+            placeholder="Enter admin password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+            style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '2px solid #e0e0e0', boxSizing: 'border-box', fontSize: '16px', marginBottom: '10px' }}
+          />
+          {error && <p style={{ color: 'red', margin: '0 0 10px' }}>❌ {error}</p>}
+          <button onClick={handleLogin} style={{
+            width: '100%', padding: '13px',
+            background: 'linear-gradient(135deg, #1a73e8, #6a1b9a)',
+            color: 'white', border: 'none', borderRadius: '10px',
+            fontSize: '16px', fontWeight: '700', cursor: 'pointer'
+          }}>Login as Admin 🚀</button>
+        </div>
       </div>
     )
   }
 
+  const tabBtn = (tab, label, emoji) => (
+    <button onClick={() => setActiveTab(tab)} style={{
+      padding: '10px 18px',
+      background: activeTab === tab ? 'linear-gradient(135deg, #1a73e8, #6a1b9a)' : '#f0f0f0',
+      color: activeTab === tab ? 'white' : '#555',
+      border: 'none', borderRadius: '10px', cursor: 'pointer',
+      fontWeight: '700', fontSize: '14px', whiteSpace: 'nowrap'
+    }}>{emoji} {label}</button>
+  )
+
   return (
-    <div style={{ padding: '30px' }}>
-      <h2 style={{ color: '#2c7be5' }}>Admin Panel</h2>
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
-        <button onClick={() => setActiveTab('medicines')} style={{ padding: '10px 25px', background: activeTab === 'medicines' ? '#2c7be5' : '#eee', color: activeTab === 'medicines' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Medicines</button>
-        <button onClick={() => setActiveTab('orders')} style={{ padding: '10px 25px', background: activeTab === 'orders' ? '#2c7be5' : '#eee', color: activeTab === 'orders' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Orders</button>
-        <button onClick={() => setActiveTab('prescriptions')} style={{ padding: '10px 25px', background: activeTab === 'prescriptions' ? '#2c7be5' : '#eee', color: activeTab === 'prescriptions' ? 'white' : 'black', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Prescriptions</button>
+    <div style={{ padding: '15px', maxWidth: '1200px', margin: '0 auto' }}>
+
+      {/* Header */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1a73e8, #6a1b9a)',
+        borderRadius: '15px', padding: '20px', marginBottom: '20px',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px'
+      }}>
+        <div>
+          <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(18px, 4vw, 28px)' }}>🏥 Admin Panel</h2>
+          <p style={{ color: 'rgba(255,255,255,0.8)', margin: 0, fontSize: '13px' }}>PharmaCare Dashboard</p>
+        </div>
+        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+          <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
+            <div style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>{medicines.length}</div>
+            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>Medicines</div>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
+            <div style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>{orders.length}</div>
+            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>Orders</div>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
+            <div style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>{prescriptions.length}</div>
+            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>Prescriptions</div>
+          </div>
+        </div>
       </div>
 
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+        {tabBtn('medicines', 'Medicines', '💊')}
+        {tabBtn('orders', 'Orders', '📦')}
+        {tabBtn('prescriptions', 'Prescriptions', '📋')}
+      </div>
+
+      {/* Medicines Tab */}
       {activeTab === 'medicines' && (
         <div>
-          <div style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0,0,0,0.1)', marginBottom: '30px' }}>
-            <h3>Add New Medicine</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '15px' }}>
-              <input placeholder="Medicine Name" value={newMedicine.name} onChange={(e) => setNewMedicine({ ...newMedicine, name: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-              <input placeholder="Category" value={newMedicine.category} onChange={(e) => setNewMedicine({ ...newMedicine, category: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-              <input placeholder="Price" type="number" value={newMedicine.price} onChange={(e) => setNewMedicine({ ...newMedicine, price: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
-              <input placeholder="Stock" type="number" value={newMedicine.stock} onChange={(e) => setNewMedicine({ ...newMedicine, stock: e.target.value })} style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+          {/* Add Medicine Form */}
+          <div style={{ background: 'white', borderRadius: '15px', padding: '20px', marginBottom: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
+            <h3 style={{ color: '#1a73e8', margin: '0 0 15px' }}>➕ Add New Medicine</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px', marginBottom: '15px' }}>
+              <input placeholder="Medicine Name" value={newMedicine.name}
+                onChange={(e) => setNewMedicine({ ...newMedicine, name: e.target.value })}
+                style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '14px' }} />
+              <input placeholder="Category" value={newMedicine.category}
+                onChange={(e) => setNewMedicine({ ...newMedicine, category: e.target.value })}
+                style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '14px' }} />
+              <input placeholder="Price" type="number" value={newMedicine.price}
+                onChange={(e) => setNewMedicine({ ...newMedicine, price: e.target.value })}
+                style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '14px' }} />
+              <input placeholder="Stock" type="number" value={newMedicine.stock}
+                onChange={(e) => setNewMedicine({ ...newMedicine, stock: e.target.value })}
+                style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '14px' }} />
             </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px' }}>
-            <input
-            type="checkbox"
-            id="prescription"
-            checked={newMedicine.prescriptionRequired}
-            onChange={(e) => setNewMedicine({ ...newMedicine, prescriptionRequired: e.target.checked })}
-            />
-            <label htmlFor="prescription" style={{ fontSize: '14px' }}>⚠️ Prescription Required</label>
-            </div> 
-            <button onClick={handleAdd} style={{ padding: '10px 25px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' }}>Add Medicine</button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px' }}>
+              <input type="checkbox" id="prescription" checked={newMedicine.prescriptionRequired}
+                onChange={(e) => setNewMedicine({ ...newMedicine, prescriptionRequired: e.target.checked })} />
+              <label htmlFor="prescription" style={{ fontSize: '14px', color: '#555' }}>⚠️ Prescription Required</label>
+            </div>
+            <button onClick={handleAdd} style={{
+              padding: '11px 25px', background: 'linear-gradient(135deg, #28a745, #20874f)',
+              color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer',
+              fontSize: '15px', fontWeight: '700'
+            }}>➕ Add Medicine</button>
           </div>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ background: '#2c7be5', color: 'white' }}>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Name</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Category</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Price</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Stock</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {medicines.map(medicine => (
-                <tr key={medicine.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <td style={{ padding: '12px' }}>{medicine.name}</td>
-                  <td style={{ padding: '12px' }}>{medicine.category}</td>
-                  <td style={{ padding: '12px' }}>Rs. {medicine.price}</td>
-                  <td style={{ padding: '12px' }}>{medicine.stock}</td>
-                  <td style={{ padding: '12px' }}>
-                    <button onClick={() => handleDelete(medicine.id)} style={{ padding: '8px 15px', background: 'red', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+
+          {/* Medicines Cards (Mobile friendly) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '15px' }}>
+            {medicines.map(medicine => (
+              <div key={medicine.id} style={{
+                background: 'white', borderRadius: '12px', padding: '15px',
+                boxShadow: '0 3px 15px rgba(0,0,0,0.08)',
+                borderLeft: '4px solid #1a73e8'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <h4 style={{ margin: '0 0 5px', color: '#333' }}>💊 {medicine.name}</h4>
+                    <p style={{ margin: '3px 0', color: '#777', fontSize: '13px' }}>📁 {medicine.category}</p>
+                    <p style={{ margin: '3px 0', color: '#28a745', fontWeight: '700' }}>Rs. {medicine.price}</p>
+                    <p style={{ margin: '3px 0', color: '#555', fontSize: '13px' }}>Stock: {medicine.stock}</p>
+                    {medicine.prescriptionRequired && (
+                      <span style={{ fontSize: '11px', color: 'red' }}>⚠️ Prescription Required</span>
+                    )}
+                  </div>
+                  <button onClick={() => handleDelete(medicine.id)} style={{
+                    padding: '7px 12px', background: '#ff4444', color: 'white',
+                    border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '13px'
+                  }}>🗑️ Delete</button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
+      {/* Orders Tab */}
       {activeTab === 'orders' && (
-        <div>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ background: '#2c7be5', color: 'white' }}>
-                <th style={{ padding: '12px', textAlign: 'left' }}>ID</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Customer</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Phone</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Address</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Total</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Status</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Update</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map(order => (
-                <tr key={order.id} style={{ borderBottom: '1px solid #eee' }}>
-                  <td style={{ padding: '12px' }}>#{order.id}</td>
-                  <td style={{ padding: '12px' }}>{order.customerName}</td>
-                  <td style={{ padding: '12px' }}>{order.customerPhone}</td>
-                  <td style={{ padding: '12px' }}>{order.address}</td>
-                  <td style={{ padding: '12px' }}>Rs. {order.totalAmount}</td>
-                  <td style={{ padding: '12px' }}>
-                    <span style={{ padding: '5px 10px', borderRadius: '5px', background: order.status === 'Delivered' ? '#28a745' : order.status === 'Processing' ? '#ffc107' : '#dc3545', color: 'white', fontSize: '12px' }}>{order.status}</span>
-                  </td>
-                  <td style={{ padding: '12px' }}>
-                    <select onChange={(e) => updateOrderStatus(order.id, e.target.value)} defaultValue={order.status} style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ccc' }}>
-                      <option value="Pending">Pending</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Out for Delivery">Out for Delivery</option>
-                      <option value="Delivered">Delivered</option>
-                    </select>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '15px' }}>
+          {orders.length === 0 ? (
+            <p style={{ color: '#777', textAlign: 'center', padding: '50px', gridColumn: '1/-1' }}>No orders yet!</p>
+          ) : orders.map(order => (
+            <div key={order.id} style={{
+              background: 'white', borderRadius: '12px', padding: '18px',
+              boxShadow: '0 3px 15px rgba(0,0,0,0.08)',
+              borderLeft: `4px solid ${order.status === 'Delivered' ? '#28a745' : order.status === 'Processing' ? '#ffc107' : '#dc3545'}`
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <span style={{ fontWeight: '800', color: '#1a73e8' }}>#{order.id}</span>
+                <span style={{
+                  padding: '4px 10px', borderRadius: '20px', fontSize: '12px', fontWeight: '700',
+                  background: order.status === 'Delivered' ? '#28a745' : order.status === 'Processing' ? '#ffc107' : '#dc3545',
+                  color: 'white'
+                }}>{order.status}</span>
+              </div>
+              <p style={{ margin: '4px 0', color: '#333', fontWeight: '600' }}>👤 {order.customerName}</p>
+              <p style={{ margin: '4px 0', color: '#555', fontSize: '13px' }}>📞 {order.customerPhone}</p>
+              <p style={{ margin: '4px 0', color: '#555', fontSize: '13px' }}>📍 {order.address}</p>
+              <p style={{ margin: '8px 0', color: '#28a745', fontWeight: '700' }}>💰 Rs. {order.totalAmount}</p>
+              <select onChange={(e) => updateOrderStatus(order.id, e.target.value)} defaultValue={order.status}
+                style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '14px', marginTop: '5px' }}>
+                <option value="Pending">⏳ Pending</option>
+                <option value="Processing">🔄 Processing</option>
+                <option value="Out for Delivery">🚚 Out for Delivery</option>
+                <option value="Delivered">✅ Delivered</option>
+              </select>
+            </div>
+          ))}
         </div>
       )}
 
+      {/* Prescriptions Tab */}
       {activeTab === 'prescriptions' && (
-        <div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '15px' }}>
           {prescriptions.length === 0 ? (
-            <p style={{ color: '#777', textAlign: 'center', padding: '50px' }}>No prescriptions uploaded yet!</p>
-          ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: '#2c7be5', color: 'white' }}>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>ID</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Customer</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Email</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>File</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Status</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {prescriptions.map(p => (
-                  <tr key={p.id} style={{ borderBottom: '1px solid #eee' }}>
-                    <td style={{ padding: '12px' }}>#{p.id}</td>
-                    <td style={{ padding: '12px' }}>{p.customerName}</td>
-                    <td style={{ padding: '12px' }}>{p.customerEmail}</td>
-                    <td style={{ padding: '12px' }}>
-                      <a href={'https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/file/' + p.fileName} target="_blank" rel="noreferrer" style={{ color: '#2c7be5', textDecoration: 'none', fontWeight: 'bold' }}>View File</a>
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      <span style={{ padding: '5px 10px', borderRadius: '5px', background: p.status === 'VERIFIED' ? '#28a745' : p.status === 'REJECTED' ? '#dc3545' : '#ffc107', color: 'white', fontSize: '12px' }}>{p.status}</span>
-                    </td>
-                    <td style={{ padding: '12px', display: 'flex', gap: '5px' }}>
-                      {p.status === 'PENDING' && (
-                        <span>
-                          <button onClick={() => verifyPrescription(p.id)} style={{ padding: '8px 15px', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginRight: '5px' }}>Verify</button>
-                          <button onClick={() => rejectPrescription(p.id)} style={{ padding: '8px 15px', background: 'red', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Reject</button>
-                        </span>
-                      )}
-                      {p.status !== 'PENDING' && <span style={{ color: '#777' }}>Done</span>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+            <p style={{ color: '#777', textAlign: 'center', padding: '50px', gridColumn: '1/-1' }}>No prescriptions uploaded yet!</p>
+          ) : prescriptions.map(p => (
+            <div key={p.id} style={{
+              background: 'white', borderRadius: '12px', padding: '18px',
+              boxShadow: '0 3px 15px rgba(0,0,0,0.08)',
+              borderLeft: `4px solid ${p.status === 'VERIFIED' ? '#28a745' : p.status === 'REJECTED' ? '#dc3545' : '#ffc107'}`
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <span style={{ fontWeight: '800', color: '#1a73e8' }}>#{p.id}</span>
+                <span style={{
+                  padding: '4px 10px', borderRadius: '20px', fontSize: '12px', fontWeight: '700',
+                  background: p.status === 'VERIFIED' ? '#28a745' : p.status === 'REJECTED' ? '#dc3545' : '#ffc107',
+                  color: 'white'
+                }}>{p.status}</span>
+              </div>
+              <p style={{ margin: '4px 0', color: '#333', fontWeight: '600' }}>👤 {p.customerName}</p>
+              <p style={{ margin: '4px 0', color: '#555', fontSize: '13px' }}>📧 {p.customerEmail}</p>
+              <a href={'https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/file/' + p.fileName}
+                target="_blank" rel="noreferrer"
+                style={{ display: 'inline-block', margin: '10px 0', padding: '7px 15px', background: '#1a73e8', color: 'white', borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: '700' }}>
+                📄 View File
+              </a>
+              {p.status === 'PENDING' && (
+                <div style={{ display: 'flex', gap: '8px', marginTop: '5px' }}>
+                  <button onClick={() => verifyPrescription(p.id)} style={{
+                    flex: 1, padding: '9px', background: '#28a745', color: 'white',
+                    border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '13px'
+                  }}>✅ Verify</button>
+                  <button onClick={() => rejectPrescription(p.id)} style={{
+                    flex: 1, padding: '9px', background: '#dc3545', color: 'white',
+                    border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', fontSize: '13px'
+                  }}>❌ Reject</button>
+                </div>
+              )}
+              {p.status !== 'PENDING' && (
+                <p style={{ color: '#777', fontSize: '13px', margin: '8px 0 0', textAlign: 'center' }}>✓ Action Completed</p>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </div>

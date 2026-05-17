@@ -17,6 +17,8 @@ function Cart() {
     address: ''
   })
 
+  const isLoggedIn = !!localStorage.getItem('token')
+
   const validCoupons = { 'PHARMA10': 10, 'SAVE20': 20, 'HEALTH15': 15 }
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const discountAmount = (subtotal * discount) / 100
@@ -35,6 +37,13 @@ function Cart() {
   }
 
   const placeOrder = async () => {
+    // Login check
+    if (!isLoggedIn) {
+      alert('⚠️ Please login or register to place an order!')
+      window.location.href = '/login'
+      return
+    }
+
     if (!form.customerName || !form.customerEmail || !form.customerPhone || !form.address) {
       alert('Please fill all fields!')
       return
@@ -47,7 +56,6 @@ function Cart() {
     setLoading(true)
 
     try {
-      // Step 1: Place order first
       const order = {
         customerName: form.customerName,
         customerEmail: form.customerEmail,
@@ -66,7 +74,6 @@ function Cart() {
       const orderData = await orderRes.json()
       localStorage.setItem('lastOrderId', orderData.id)
 
-      // Step 2: Upload prescription after order
       if (prescription) {
         const formData = new FormData()
         formData.append('file', prescription)
@@ -74,16 +81,10 @@ function Cart() {
         formData.append('customerEmail', form.customerEmail)
         formData.append('orderId', orderData.id)
 
-        const presRes = await fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/upload', {
+        await fetch('https://pharmacy-backend-1-41kr.onrender.com/api/prescriptions/upload', {
           method: 'POST',
           body: formData
         })
-
-        if (presRes.ok) {
-          console.log('✅ Prescription uploaded!')
-        } else {
-          console.error('❌ Prescription upload failed')
-        }
       }
 
       clearCart()
@@ -111,7 +112,7 @@ function Cart() {
   if (orderPlaced) {
     return (
       <div style={{ textAlign: 'center', padding: '80px' }}>
-        <h1 style={{ color: '#67a575', fontSize: '48px' }}>🎉</h1>
+        <h1 style={{ fontSize: '48px' }}>🎉</h1>
         <h2 style={{ color: '#49be64' }}>Order Placed Successfully!</h2>
         <p style={{ color: '#766f6f' }}>Your medicines will be delivered soon!</p>
         <a href="/" style={{ display: 'inline-block', marginTop: '20px', padding: '12px 30px', background: '#2c7be5', color: 'white', borderRadius: '5px', textDecoration: 'none' }}>
@@ -127,6 +128,36 @@ function Cart() {
   return (
     <div style={{ maxWidth: '700px', margin: '40px auto', padding: '30px' }}>
       <h2 style={{ color: '#2c7be5' }}>🛒 My Cart</h2>
+
+      {/* Login Warning Banner */}
+      {!isLoggedIn && (
+        <div style={{
+          background: '#fff3cd',
+          border: '2px solid #ffc107',
+          borderRadius: '10px',
+          padding: '15px 20px',
+          marginBottom: '20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '10px'
+        }}>
+          <p style={{ margin: 0, color: '#856404', fontWeight: '600', fontSize: '15px' }}>
+            ⚠️ Login Required!
+          </p>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <a href="/login" style={{
+              padding: '8px 20px', background: '#2c7be5', color: 'white',
+              borderRadius: '5px', textDecoration: 'none', fontWeight: 'bold'
+            }}>Login</a>
+            <a href="/register" style={{
+              padding: '8px 20px', background: '#28a745', color: 'white',
+              borderRadius: '5px', textDecoration: 'none', fontWeight: 'bold'
+            }}>Register</a>
+          </div>
+        </div>
+      )}
 
       {cartItems.map(item => (
         <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px', marginBottom: '15px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
@@ -180,7 +211,7 @@ function Cart() {
           onClick={placeOrder}
           disabled={loading}
           style={{ width: '100%', padding: '12px', background: loading ? '#999' : '#b79832', color: 'white', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: loading ? 'not-allowed' : 'pointer' }}>
-          {loading ? '⏳ Placing Order...' : 'Place Order'}
+          {loading ? '⏳ Placing Order...' : '🛒 Place Order'}
         </button>
       </div>
     </div>
