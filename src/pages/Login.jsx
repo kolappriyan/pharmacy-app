@@ -26,11 +26,17 @@ function Login() {
       .then(data => {
         setLoading(false)
         if (data.message === 'Login successful!') {
-           setMessage(`✅ Welcome ${data.name}!`)
-           localStorage.setItem('user', JSON.stringify(data))
-           localStorage.setItem('token', data.token)
-           setTimeout(() => navigate('/'), 1500)
-          } else {
+          const fullUser = {
+            ...data,
+            email: email || localStorage.getItem('registerEmail') || '',
+            phone: phone || localStorage.getItem('registerPhone') || '',
+            name: data.name || localStorage.getItem('registerName') || ''
+          }
+          localStorage.setItem('user', JSON.stringify(fullUser))
+          localStorage.setItem('token', data.token)
+          setMessage(`✅ Welcome ${data.name}!`)
+          setTimeout(() => navigate('/'), 1500)
+        } else {
           setMessage('❌ Invalid credentials!')
         }
       })

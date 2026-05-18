@@ -40,6 +40,9 @@ function Register() {
       .then(data => {
         setLoading(false)
         if (data.message === 'Registration successful!') {
+          localStorage.setItem('registerEmail', form.email)
+          localStorage.setItem('registerPhone', form.phone)
+          localStorage.setItem('registerName', form.fullName)
           setMessage('✅ Registration successful! Redirecting to login...')
           setTimeout(() => navigate('/login'), 2000)
         } else {
