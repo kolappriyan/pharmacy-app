@@ -10,12 +10,22 @@ function Cart() {
   const [orderPlaced, setOrderPlaced] = useState(false)
   const [prescription, setPrescription] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [form, setForm] = useState({
-    customerName: '',
-    customerEmail: '',
-    customerPhone: '',
-    address: ''
-  })
+  const getLoggedInUser = () => {
+  try {
+    const userStr = localStorage.getItem('user')
+    if (userStr) return JSON.parse(userStr)
+    return null
+  } catch { return null }
+  }
+
+const loggedUser = getLoggedInUser()
+
+const [form, setForm] = useState({
+  customerName: loggedUser?.name || '',
+  customerEmail: loggedUser?.email || '',
+  customerPhone: loggedUser?.phone || '',
+  address: ''
+})
 
   const isLoggedIn = () => {
   const token = localStorage.getItem('token')
