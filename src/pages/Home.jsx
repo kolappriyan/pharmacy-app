@@ -143,6 +143,35 @@ function Home() {
           ))}
         </div>
       </div>
+      {/* Reviews Section */}
+      {(() => {
+        const reviews = JSON.parse(localStorage.getItem('reviews') || '[]')
+        if (reviews.length === 0) return null
+        return (
+          <div style={{ padding: '50px 20px', maxWidth: '1000px', margin: '0 auto' }}>
+            <h2 style={{ textAlign: 'center', color: '#333', fontSize: 'clamp(20px, 4vw, 32px)', fontWeight: '800', marginBottom: '30px' }}>
+               ⭐ Customer Reviews
+            </h2>
+         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
+            {reviews.slice(-6).reverse().map(review => (
+              <div key={review.id} style={{
+                 background: 'white', borderRadius: '16px', padding: '20px',
+                 boxShadow: '0 5px 20px rgba(0,0,0,0.08)',
+                 borderTop: '4px solid #ff9800'
+             }}>
+             <div style={{ display: 'flex', gap: '3px', marginBottom: '10px' }}>
+                 {[1,2,3,4,5].map(s => (
+                   <span key={s} style={{ fontSize: '20px', filter: s <= review.rating ? 'none' : 'grayscale(1)' }}>⭐</span>
+                ))}
+             </div>
+             <p style={{ color: '#333', margin: '0 0 10px', fontSize: '15px', lineHeight: '1.6' }}>"{review.comment}"</p>
+             <p style={{ color: '#999', margin: 0, fontSize: '12px' }}>📅 {review.date}</p>
+            </div>
+         ))}
+          </div>
+       </div>
+      )
+    })()}
 
       {/* CTA Banner */}
       <div style={{
