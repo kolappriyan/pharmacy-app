@@ -46,7 +46,19 @@ function Cart() {
       setMessage('❌ Invalid coupon code!')
     }
   }
-
+  const placeOrder = async () => {
+  // Debug
+  console.log('Token:', localStorage.getItem('token'))
+  console.log('isLoggedIn:', isLoggedIn())
+  console.log('Form:', form)
+  
+  // Login check
+  if (!isLoggedIn()) {
+    alert('Please login!')
+    window.location.href = '/login'
+    return
+  }
+  // ... rest same
   const placeOrder = async () => {
     // Login check
     if (!isLoggedIn()) {
