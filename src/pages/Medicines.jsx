@@ -27,130 +27,129 @@ const getMedicineImage = (name) => {
   return images[name] || 'healthcare1.png'
 }
 
-  {
-    const medicineInfo = {
-  'Paracetamol': {
-    uses: 'Fever, headache, mild to moderate pain relief',
-    dosage: '500mg - 1000mg every 4-6 hours',
-    sideEffects: 'Nausea, stomach pain (rare)',
-    warning: 'Do not exceed 4g per day'
-  },
-  'Ibuprofen': {
-    uses: 'Pain, fever, inflammation, arthritis',
-    dosage: '200mg - 400mg every 4-6 hours',
-    sideEffects: 'Stomach upset, heartburn',
-    warning: 'Take with food. Avoid if kidney problems'
-  },
-  'Amoxicillin': {
-    uses: 'Bacterial infections, ear, throat, chest infections',
-    dosage: '250mg - 500mg every 8 hours',
-    sideEffects: 'Diarrhea, rash, nausea',
-    warning: 'Complete full course. Check for penicillin allergy'
-  },
-  'Cetirizine': {
-    uses: 'Allergies, hay fever, hives, runny nose',
-    dosage: '10mg once daily',
-    sideEffects: 'Drowsiness, dry mouth',
-    warning: 'May cause drowsiness. Avoid driving'
-  },
-  'Omeprazole': {
-    uses: 'Acid reflux, stomach ulcers, GERD',
-    dosage: '20mg once daily before meals',
-    sideEffects: 'Headache, nausea, diarrhea',
-    warning: 'Long-term use may affect bone density'
-  },
-  'Metformin': {
-    uses: 'Type 2 diabetes management',
-    dosage: '500mg - 1000mg twice daily with meals',
-    sideEffects: 'Nausea, diarrhea, stomach upset',
-    warning: 'Monitor kidney function regularly'
-  },
-  'Atorvastatin': {
-    uses: 'High cholesterol, heart disease prevention',
-    dosage: '10mg - 80mg once daily',
-    sideEffects: 'Muscle pain, liver issues (rare)',
-    warning: 'Avoid grapefruit juice. Regular liver tests needed'
-  },
-  'Amlodipine': {
-    uses: 'High blood pressure, chest pain (angina)',
-    dosage: '5mg - 10mg once daily',
-    sideEffects: 'Swollen ankles, flushing, dizziness',
-    warning: 'Do not stop suddenly without doctor advice'
-  },
-  'Azithromycin': {
-    uses: 'Bacterial infections, pneumonia, throat infections',
-    dosage: '500mg on day 1, then 250mg for 4 days',
-    sideEffects: 'Nausea, vomiting, diarrhea',
-    warning: 'Prescription required. Complete full course'
-  },
-  'Pantoprazole': {
-    uses: 'Acid reflux, stomach ulcers, Zollinger-Ellison syndrome',
-    dosage: '40mg once daily before breakfast',
-    sideEffects: 'Headache, diarrhea, flatulence',
-    warning: 'Long term use needs doctor supervision'
-  },
-  'Vitamin C': {
-    uses: 'Immune support, antioxidant, collagen production',
-    dosage: '500mg - 1000mg daily',
-    sideEffects: 'Stomach upset at high doses',
-    warning: 'High doses may cause kidney stones'
-  },
-  'Vitamin D3': {
-    uses: 'Bone health, immune function, calcium absorption',
-    dosage: '1000 IU - 2000 IU daily',
-    sideEffects: 'Toxicity at very high doses',
-    warning: 'Get blood levels tested before high dose supplementation'
-  },
-  'Aspirin': {
-    uses: 'Pain relief, fever, blood clot prevention',
-    dosage: '75mg - 325mg daily',
-    sideEffects: 'Stomach bleeding, nausea',
-    warning: 'Not for children under 16. Avoid if blood disorders'
-  },
-  'Doxycycline': {
-    uses: 'Bacterial infections, acne, malaria prevention',
-    dosage: '100mg twice daily',
-    sideEffects: 'Photosensitivity, nausea',
-    warning: 'Avoid sun exposure. Take with food and water'
-  },
-  'Loratadine': {
-    uses: 'Allergies, hay fever, hives',
-    dosage: '10mg once daily',
-    sideEffects: 'Headache, dry mouth (minimal)',
-    warning: 'Non-drowsy formula. Safe for daytime use'
-  },
-  'Metronidazole': {
-    uses: 'Bacterial and parasitic infections',
-    dosage: '400mg - 500mg three times daily',
-    sideEffects: 'Metallic taste, nausea',
-    warning: 'Avoid alcohol completely during treatment'
-  },
-  'Ranitidine': {
-    uses: 'Heartburn, acid reflux, stomach ulcers',
-    dosage: '150mg twice daily',
-    sideEffects: 'Headache, constipation',
-    warning: 'Consult doctor if symptoms persist'
-  },
-  'Loperamide': {
-    uses: 'Diarrhea treatment',
-    dosage: '2mg after each loose stool, max 8mg/day',
-    sideEffects: 'Constipation, stomach cramps',
-    warning: 'Not for use in children under 2 years'
-  },
-  'Calcium': {
-    uses: 'Bone strength, muscle function, nerve health',
-    dosage: '500mg - 1200mg daily with meals',
-    sideEffects: 'Constipation, bloating',
-    warning: 'Take with Vitamin D for better absorption'
-  },
-  'Multivitamin': {
-    uses: 'Daily nutritional supplement, energy, immunity',
-    dosage: '1 tablet daily with meals',
-    sideEffects: 'Mild nausea if taken on empty stomach',
-    warning: 'Not a substitute for balanced diet'
-  }
-  }
+const medicineInfo = {
+'Paracetamol': {
+uses: 'Fever, headache, mild to moderate pain relief',
+dosage: '500mg - 1000mg every 4-6 hours',
+sideEffects: 'Nausea, stomach pain (rare)',
+warning: 'Do not exceed 4g per day'
+},
+'Ibuprofen': {
+uses: 'Pain, fever, inflammation, arthritis',
+dosage: '200mg - 400mg every 4-6 hours',
+sideEffects: 'Stomach upset, heartburn',
+warning: 'Take with food. Avoid if kidney problems'
+},
+'Amoxicillin': {
+uses: 'Bacterial infections, ear, throat, chest infections',
+dosage: '250mg - 500mg every 8 hours',
+sideEffects: 'Diarrhea, rash, nausea',
+warning: 'Complete full course. Check for penicillin allergy'
+},
+'Cetirizine': {
+uses: 'Allergies, hay fever, hives, runny nose',
+dosage: '10mg once daily',
+sideEffects: 'Drowsiness, dry mouth',
+warning: 'May cause drowsiness. Avoid driving'
+},
+'Omeprazole': {
+uses: 'Acid reflux, stomach ulcers, GERD',
+dosage: '20mg once daily before meals',
+sideEffects: 'Headache, nausea, diarrhea',
+warning: 'Long-term use may affect bone density'
+},
+'Metformin': {
+uses: 'Type 2 diabetes management',
+dosage: '500mg - 1000mg twice daily with meals',
+sideEffects: 'Nausea, diarrhea, stomach upset',
+warning: 'Monitor kidney function regularly'
+},
+'Atorvastatin': {
+uses: 'High cholesterol, heart disease prevention',
+dosage: '10mg - 80mg once daily',
+sideEffects: 'Muscle pain, liver issues (rare)',
+warning: 'Avoid grapefruit juice. Regular liver tests needed'
+},
+'Amlodipine': {
+uses: 'High blood pressure, chest pain (angina)',
+dosage: '5mg - 10mg once daily',
+sideEffects: 'Swollen ankles, flushing, dizziness',
+warning: 'Do not stop suddenly without doctor advice'
+},
+'Azithromycin': {
+uses: 'Bacterial infections, pneumonia, throat infections',
+dosage: '500mg on day 1, then 250mg for 4 days',
+sideEffects: 'Nausea, vomiting, diarrhea',
+warning: 'Prescription required. Complete full course'
+},
+'Pantoprazole': {
+uses: 'Acid reflux, stomach ulcers, Zollinger-Ellison syndrome',
+dosage: '40mg once daily before breakfast',
+sideEffects: 'Headache, diarrhea, flatulence',
+warning: 'Long term use needs doctor supervision'
+},
+'Vitamin C': {
+uses: 'Immune support, antioxidant, collagen production',
+dosage: '500mg - 1000mg daily',
+sideEffects: 'Stomach upset at high doses',
+warning: 'High doses may cause kidney stones'
+},
+'Vitamin D3': {
+uses: 'Bone health, immune function, calcium absorption',
+dosage: '1000 IU - 2000 IU daily',
+sideEffects: 'Toxicity at very high doses',
+warning: 'Get blood levels tested before high dose supplementation'
+},
+'Aspirin': {
+uses: 'Pain relief, fever, blood clot prevention',
+dosage: '75mg - 325mg daily',
+sideEffects: 'Stomach bleeding, nausea',
+warning: 'Not for children under 16. Avoid if blood disorders'
+},
+'Doxycycline': {
+uses: 'Bacterial infections, acne, malaria prevention',
+dosage: '100mg twice daily',
+sideEffects: 'Photosensitivity, nausea',
+warning: 'Avoid sun exposure. Take with food and water'
+},
+'Loratadine': {
+uses: 'Allergies, hay fever, hives',
+dosage: '10mg once daily',
+sideEffects: 'Headache, dry mouth (minimal)',
+warning: 'Non-drowsy formula. Safe for daytime use'
+},
+'Metronidazole': {
+uses: 'Bacterial and parasitic infections',
+dosage: '400mg - 500mg three times daily',
+sideEffects: 'Metallic taste, nausea',
+warning: 'Avoid alcohol completely during treatment'
+},
+'Ranitidine': {
+uses: 'Heartburn, acid reflux, stomach ulcers',
+dosage: '150mg twice daily',
+sideEffects: 'Headache, constipation',
+warning: 'Consult doctor if symptoms persist'
+},
+'Loperamide': {
+uses: 'Diarrhea treatment',
+dosage: '2mg after each loose stool, max 8mg/day',
+sideEffects: 'Constipation, stomach cramps',
+warning: 'Not for use in children under 2 years'
+},
+'Calcium': {
+uses: 'Bone strength, muscle function, nerve health',
+dosage: '500mg - 1200mg daily with meals',
+sideEffects: 'Constipation, bloating',
+warning: 'Take with Vitamin D for better absorption'
+},
+'Multivitamin': {
+uses: 'Daily nutritional supplement, energy, immunity',
+dosage: '1 tablet daily with meals',
+sideEffects: 'Mild nausea if taken on empty stomach',
+warning: 'Not a substitute for balanced diet'
 }
+}
+  
 
 function Medicines() {
   const [medicines, setMedicines] = useState([])
