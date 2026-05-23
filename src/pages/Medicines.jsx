@@ -142,7 +142,7 @@ function Medicines() {
             {/* Info Button */}
             <button
               onClick={() => setSelectedMedicine(medicine)}
-              style={{ position: 'absolute', top: '10px', right: '10px', background: '#e07a1a', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold', lineHeight: '22px' }}>
+              style={{ position: 'absolute', top: '10px', right: '10px', background: '#e0d9d3', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold', lineHeight: '22px' }}>
               ℹ
             </button>
 
