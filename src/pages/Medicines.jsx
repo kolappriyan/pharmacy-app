@@ -100,7 +100,7 @@ function Medicines() {
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ background: 'white', borderRadius: '15px', padding: '30px', maxWidth: '400px', width: '90%', position: 'relative' }}>
             <button onClick={() => setSelectedMedicine(null)} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer' }}>✕</button>
-            <h3 style={{ color: '#2c7be5', marginBottom: '15px' }}>💊 {selectedMedicine.name}</h3>
+            <h3 style={{ color: '#435b7a', marginBottom: '15px' }}>💊 {selectedMedicine.name}</h3>
             {medicineInfo[selectedMedicine.name] ? (
               <>
                 <p><strong>📋 Uses:</strong> {medicineInfo[selectedMedicine.name].uses}</p>
@@ -142,7 +142,7 @@ function Medicines() {
             {/* Info Button */}
             <button
               onClick={() => setSelectedMedicine(medicine)}
-              style={{ position: 'absolute', top: '10px', right: '10px', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold', lineHeight: '22px' }}>
+              style={{ position: 'absolute', top: '10px', right: '10px', background: '#e07a1a', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold', lineHeight: '22px' }}>
               ℹ
             </button>
 
