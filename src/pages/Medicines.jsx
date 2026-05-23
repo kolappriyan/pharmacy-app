@@ -26,17 +26,7 @@ const getMedicineImage = (name) => {
   }
   return images[name] || 'healthcare1.png'
 }
-
-  <div style={{ position: 'relative' }}>
-  <button
-    onClick={() => setSelectedMedicine(medicine)}
-    style={{ position: 'absolute', top: '0', right: '0', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>
-    ℹ
-  </button>
-  <img src={getMedicineImage(medicine.name)} ... />
-</div>
-
-  const medicineInfo = {
+const medicineInfo = {
   'Paracetamol': { uses: 'Fever, headache, mild pain relief', dosage: '500mg-1000mg every 4-6 hrs', warning: 'Max 4g/day' },
   'Ibuprofen': { uses: 'Pain, fever, inflammation', dosage: '200-400mg every 4-6 hrs', warning: 'Take with food' },
   'Amoxicillin': { uses: 'Bacterial infections', dosage: '250-500mg every 8 hrs', warning: 'Check penicillin allergy' },
@@ -64,27 +54,26 @@ function Medicines() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [added, setAdded] = useState({})
-  const { addToCart } = useCart()
   const [selectedMedicine, setSelectedMedicine] = useState(null)
-
   const [loading, setLoading] = useState(true)
+  const { addToCart } = useCart()
+
   useEffect(() => {
     fetch('https://pharmacy-backend-1-41kr.onrender.com/api/medicines')
-     .then(res => res.json())
-     .then(data => {
-       setMedicines(Array.isArray(data) ? data : [])
-       setLoading(false)
-    })
-    .catch(() => {
-      setLoading(false)
-    })
+      .then(res => res.json())
+      .then(data => {
+        setMedicines(Array.isArray(data) ? data : [])
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
   }, [])
+
   if (loading) {
-   return (
-    <div style={{ textAlign: 'center', padding: '80px' }}>
-      <h2 style={{ color: '#2c7be5' }}>💊 Loading Medicines...</h2>
-      <p style={{ color: '#777' }}>Please wait, server is starting up (may take 50 seconds)</p>
-    </div>
+    return (
+      <div style={{ textAlign: 'center', padding: '80px' }}>
+        <h2 style={{ color: '#2c7be5' }}>💊 Loading Medicines...</h2>
+        <p style={{ color: '#777' }}>Please wait, server is starting up (may take 50 seconds)</p>
+      </div>
     )
   }
 
@@ -101,29 +90,31 @@ function Medicines() {
     setAdded({ ...added, [medicine.id]: true })
     setTimeout(() => setAdded(prev => ({ ...prev, [medicine.id]: false })), 1500)
   }
-  {selectedMedicine && (
-  <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <div style={{ background: 'white', borderRadius: '15px', padding: '30px', maxWidth: '400px', width: '90%', position: 'relative' }}>
-      <button onClick={() => setSelectedMedicine(null)} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer' }}>✕</button>
-      <h3 style={{ color: '#2c7be5', marginBottom: '15px' }}>💊 {selectedMedicine.name}</h3>
-      {medicineInfo[selectedMedicine.name] ? (
-        <>
-          <p><strong>📋 Uses:</strong> {medicineInfo[selectedMedicine.name].uses}</p>
-          <p><strong>💉 Dosage:</strong> {medicineInfo[selectedMedicine.name].dosage}</p>
-          <p><strong>⚠️ Warning:</strong> {medicineInfo[selectedMedicine.name].warning}</p>
-        </>
-      ) : (
-        <p>Category: {selectedMedicine.category}</p>
-      )}
-      <p><strong>💰 Price:</strong> Rs. {selectedMedicine.price}</p>
-      <p><strong>📦 Stock:</strong> {selectedMedicine.stock}</p>
-    </div>
-  </div>
-)}
 
   return (
     <div style={{ padding: '30px' }}>
       <h2 style={{ color: '#2c7be5' }}>💊 Medicines</h2>
+
+      {/* Popup Modal */}
+      {selectedMedicine && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ background: 'white', borderRadius: '15px', padding: '30px', maxWidth: '400px', width: '90%', position: 'relative' }}>
+            <button onClick={() => setSelectedMedicine(null)} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer' }}>✕</button>
+            <h3 style={{ color: '#2c7be5', marginBottom: '15px' }}>💊 {selectedMedicine.name}</h3>
+            {medicineInfo[selectedMedicine.name] ? (
+              <>
+                <p><strong>📋 Uses:</strong> {medicineInfo[selectedMedicine.name].uses}</p>
+                <p><strong>💉 Dosage:</strong> {medicineInfo[selectedMedicine.name].dosage}</p>
+                <p><strong>⚠️ Warning:</strong> {medicineInfo[selectedMedicine.name].warning}</p>
+              </>
+            ) : (
+              <p>Category: {selectedMedicine.category}</p>
+            )}
+            <p><strong>💰 Price:</strong> Rs. {selectedMedicine.price}</p>
+            <p><strong>📦 Stock:</strong> {selectedMedicine.stock}</p>
+          </div>
+        </div>
+      )}
 
       {/* Search */}
       <input
@@ -146,11 +137,19 @@ function Medicines() {
       {/* Medicine Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
         {filtered.map(medicine => (
-          <div key={medicine.id} style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0,0,0,0.1)', textAlign: 'center', background: 'white' }}>
-           <img
-            src={getMedicineImage(medicine.name)}
-            alt={medicine.name}
-            style={{ width: '70px', height: '70px', marginBottom: '10px' }}
+          <div key={medicine.id} style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 0 15px rgba(0,0,0,0.1)', textAlign: 'center', background: 'white', position: 'relative' }}>
+
+            {/* Info Button */}
+            <button
+              onClick={() => setSelectedMedicine(medicine)}
+              style={{ position: 'absolute', top: '10px', right: '10px', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold', lineHeight: '22px' }}>
+              ℹ
+            </button>
+
+            <img
+              src={getMedicineImage(medicine.name)}
+              alt={medicine.name}
+              style={{ width: '70px', height: '70px', marginBottom: '10px' }}
             />
             <h3 style={{ color: '#333', fontSize: '16px', margin: '5px 0' }}>{medicine.name}</h3>
             <p style={{ color: '#888888', fontSize: '13px' }}>{medicine.category}</p>
