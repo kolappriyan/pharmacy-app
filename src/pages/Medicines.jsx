@@ -27,129 +27,37 @@ const getMedicineImage = (name) => {
   return images[name] || 'healthcare1.png'
 }
 
-const medicineInfo = {
-'Paracetamol': {
-uses: 'Fever, headache, mild to moderate pain relief',
-dosage: '500mg - 1000mg every 4-6 hours',
-sideEffects: 'Nausea, stomach pain (rare)',
-warning: 'Do not exceed 4g per day'
-},
-'Ibuprofen': {
-uses: 'Pain, fever, inflammation, arthritis',
-dosage: '200mg - 400mg every 4-6 hours',
-sideEffects: 'Stomach upset, heartburn',
-warning: 'Take with food. Avoid if kidney problems'
-},
-'Amoxicillin': {
-uses: 'Bacterial infections, ear, throat, chest infections',
-dosage: '250mg - 500mg every 8 hours',
-sideEffects: 'Diarrhea, rash, nausea',
-warning: 'Complete full course. Check for penicillin allergy'
-},
-'Cetirizine': {
-uses: 'Allergies, hay fever, hives, runny nose',
-dosage: '10mg once daily',
-sideEffects: 'Drowsiness, dry mouth',
-warning: 'May cause drowsiness. Avoid driving'
-},
-'Omeprazole': {
-uses: 'Acid reflux, stomach ulcers, GERD',
-dosage: '20mg once daily before meals',
-sideEffects: 'Headache, nausea, diarrhea',
-warning: 'Long-term use may affect bone density'
-},
-'Metformin': {
-uses: 'Type 2 diabetes management',
-dosage: '500mg - 1000mg twice daily with meals',
-sideEffects: 'Nausea, diarrhea, stomach upset',
-warning: 'Monitor kidney function regularly'
-},
-'Atorvastatin': {
-uses: 'High cholesterol, heart disease prevention',
-dosage: '10mg - 80mg once daily',
-sideEffects: 'Muscle pain, liver issues (rare)',
-warning: 'Avoid grapefruit juice. Regular liver tests needed'
-},
-'Amlodipine': {
-uses: 'High blood pressure, chest pain (angina)',
-dosage: '5mg - 10mg once daily',
-sideEffects: 'Swollen ankles, flushing, dizziness',
-warning: 'Do not stop suddenly without doctor advice'
-},
-'Azithromycin': {
-uses: 'Bacterial infections, pneumonia, throat infections',
-dosage: '500mg on day 1, then 250mg for 4 days',
-sideEffects: 'Nausea, vomiting, diarrhea',
-warning: 'Prescription required. Complete full course'
-},
-'Pantoprazole': {
-uses: 'Acid reflux, stomach ulcers, Zollinger-Ellison syndrome',
-dosage: '40mg once daily before breakfast',
-sideEffects: 'Headache, diarrhea, flatulence',
-warning: 'Long term use needs doctor supervision'
-},
-'Vitamin C': {
-uses: 'Immune support, antioxidant, collagen production',
-dosage: '500mg - 1000mg daily',
-sideEffects: 'Stomach upset at high doses',
-warning: 'High doses may cause kidney stones'
-},
-'Vitamin D3': {
-uses: 'Bone health, immune function, calcium absorption',
-dosage: '1000 IU - 2000 IU daily',
-sideEffects: 'Toxicity at very high doses',
-warning: 'Get blood levels tested before high dose supplementation'
-},
-'Aspirin': {
-uses: 'Pain relief, fever, blood clot prevention',
-dosage: '75mg - 325mg daily',
-sideEffects: 'Stomach bleeding, nausea',
-warning: 'Not for children under 16. Avoid if blood disorders'
-},
-'Doxycycline': {
-uses: 'Bacterial infections, acne, malaria prevention',
-dosage: '100mg twice daily',
-sideEffects: 'Photosensitivity, nausea',
-warning: 'Avoid sun exposure. Take with food and water'
-},
-'Loratadine': {
-uses: 'Allergies, hay fever, hives',
-dosage: '10mg once daily',
-sideEffects: 'Headache, dry mouth (minimal)',
-warning: 'Non-drowsy formula. Safe for daytime use'
-},
-'Metronidazole': {
-uses: 'Bacterial and parasitic infections',
-dosage: '400mg - 500mg three times daily',
-sideEffects: 'Metallic taste, nausea',
-warning: 'Avoid alcohol completely during treatment'
-},
-'Ranitidine': {
-uses: 'Heartburn, acid reflux, stomach ulcers',
-dosage: '150mg twice daily',
-sideEffects: 'Headache, constipation',
-warning: 'Consult doctor if symptoms persist'
-},
-'Loperamide': {
-uses: 'Diarrhea treatment',
-dosage: '2mg after each loose stool, max 8mg/day',
-sideEffects: 'Constipation, stomach cramps',
-warning: 'Not for use in children under 2 years'
-},
-'Calcium': {
-uses: 'Bone strength, muscle function, nerve health',
-dosage: '500mg - 1200mg daily with meals',
-sideEffects: 'Constipation, bloating',
-warning: 'Take with Vitamin D for better absorption'
-},
-'Multivitamin': {
-uses: 'Daily nutritional supplement, energy, immunity',
-dosage: '1 tablet daily with meals',
-sideEffects: 'Mild nausea if taken on empty stomach',
-warning: 'Not a substitute for balanced diet'
+  <div style={{ position: 'relative' }}>
+  <button
+    onClick={() => setSelectedMedicine(medicine)}
+    style={{ position: 'absolute', top: '0', right: '0', background: '#2c7be5', color: 'white', border: 'none', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>
+    ℹ
+  </button>
+  <img src={getMedicineImage(medicine.name)} ... />
+</div>
+
+  const medicineInfo = {
+  'Paracetamol': { uses: 'Fever, headache, mild pain relief', dosage: '500mg-1000mg every 4-6 hrs', warning: 'Max 4g/day' },
+  'Ibuprofen': { uses: 'Pain, fever, inflammation', dosage: '200-400mg every 4-6 hrs', warning: 'Take with food' },
+  'Amoxicillin': { uses: 'Bacterial infections', dosage: '250-500mg every 8 hrs', warning: 'Check penicillin allergy' },
+  'Cetirizine': { uses: 'Allergies, hay fever', dosage: '10mg once daily', warning: 'May cause drowsiness' },
+  'Omeprazole': { uses: 'Acid reflux, stomach ulcers', dosage: '20mg before meals', warning: 'Long-term needs doctor' },
+  'Metformin': { uses: 'Type 2 diabetes', dosage: '500-1000mg twice daily', warning: 'Monitor kidney function' },
+  'Atorvastatin': { uses: 'High cholesterol', dosage: '10-80mg once daily', warning: 'Avoid grapefruit juice' },
+  'Amlodipine': { uses: 'High blood pressure', dosage: '5-10mg once daily', warning: 'Do not stop suddenly' },
+  'Azithromycin': { uses: 'Bacterial infections', dosage: '500mg day1, 250mg x4 days', warning: 'Complete full course' },
+  'Pantoprazole': { uses: 'Acid reflux, ulcers', dosage: '40mg before breakfast', warning: 'Long-term needs supervision' },
+  'Vitamin C': { uses: 'Immune support, antioxidant', dosage: '500-1000mg daily', warning: 'High doses = kidney stones' },
+  'Vitamin D3': { uses: 'Bone health, immunity', dosage: '1000-2000 IU daily', warning: 'Test blood levels first' },
+  'Aspirin': { uses: 'Pain, fever, blood clots', dosage: '75-325mg daily', warning: 'Not for children under 16' },
+  'Loperamide': { uses: 'Diarrhea treatment', dosage: '2mg after each loose stool', warning: 'Max 8mg/day' },
+  'Ranitidine': { uses: 'Heartburn, acid reflux', dosage: '150mg twice daily', warning: 'Consult if symptoms persist' },
+  'Doxycycline': { uses: 'Bacterial infections, acne', dosage: '100mg twice daily', warning: 'Avoid sun exposure' },
+  'Loratadine': { uses: 'Allergies, hay fever', dosage: '10mg once daily', warning: 'Non-drowsy formula' },
+  'Metronidazole': { uses: 'Bacterial infections', dosage: '400-500mg three times daily', warning: 'Avoid alcohol completely' },
+  'Calcium': { uses: 'Bone strength, muscles', dosage: '500-1200mg daily', warning: 'Take with Vitamin D' },
+  'Multivitamin': { uses: 'Daily nutrition supplement', dosage: '1 tablet daily with meals', warning: 'Not a substitute for diet' },
 }
-}
-  
 
 function Medicines() {
   const [medicines, setMedicines] = useState([])
@@ -157,6 +65,7 @@ function Medicines() {
   const [category, setCategory] = useState('All')
   const [added, setAdded] = useState({})
   const { addToCart } = useCart()
+  const [selectedMedicine, setSelectedMedicine] = useState(null)
 
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -192,6 +101,25 @@ function Medicines() {
     setAdded({ ...added, [medicine.id]: true })
     setTimeout(() => setAdded(prev => ({ ...prev, [medicine.id]: false })), 1500)
   }
+  {selectedMedicine && (
+  <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ background: 'white', borderRadius: '15px', padding: '30px', maxWidth: '400px', width: '90%', position: 'relative' }}>
+      <button onClick={() => setSelectedMedicine(null)} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer' }}>✕</button>
+      <h3 style={{ color: '#2c7be5', marginBottom: '15px' }}>💊 {selectedMedicine.name}</h3>
+      {medicineInfo[selectedMedicine.name] ? (
+        <>
+          <p><strong>📋 Uses:</strong> {medicineInfo[selectedMedicine.name].uses}</p>
+          <p><strong>💉 Dosage:</strong> {medicineInfo[selectedMedicine.name].dosage}</p>
+          <p><strong>⚠️ Warning:</strong> {medicineInfo[selectedMedicine.name].warning}</p>
+        </>
+      ) : (
+        <p>Category: {selectedMedicine.category}</p>
+      )}
+      <p><strong>💰 Price:</strong> Rs. {selectedMedicine.price}</p>
+      <p><strong>📦 Stock:</strong> {selectedMedicine.stock}</p>
+    </div>
+  </div>
+)}
 
   return (
     <div style={{ padding: '30px' }}>
