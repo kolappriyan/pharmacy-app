@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { Bar, Line, Pie, Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js'
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend)
 
 function AdminPanel() {
   const [password, setPassword] = useState('')
@@ -149,6 +152,7 @@ function AdminPanel() {
         {tabBtn('medicines', 'Medicines', '💊')}
         {tabBtn('orders', 'Orders', '📦')}
         {tabBtn('prescriptions', 'Prescriptions', '📋')}
+        {tabBtn('dashboard', 'Dashboard', '📊')}
       </div>
 
       {/* Medicines Tab */}
@@ -211,6 +215,173 @@ function AdminPanel() {
           </div>
         </div>
       )}
+      {/* Dashboard Tab */}
+{activeTab === 'dashboard' && (
+  <div>
+
+    {/* Stats Cards */}
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '25px' }}>
+      <div style={{ background: 'linear-gradient(135deg, #1a73e8, #0d47a1)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
+        <div style={{ fontSize: '40px' }}>💊</div>
+        <div style={{ fontSize: '36px', fontWeight: '800' }}>{medicines.length}</div>
+        <div style={{ fontSize: '14px', opacity: 0.9 }}>Total Medicines</div>
+      </div>
+      <div style={{ background: 'linear-gradient(135deg, #28a745, #1a6b30)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
+        <div style={{ fontSize: '40px' }}>📦</div>
+        <div style={{ fontSize: '36px', fontWeight: '800' }}>{orders.length}</div>
+        <div style={{ fontSize: '14px', opacity: 0.9 }}>Total Orders</div>
+      </div>
+      <div style={{ background: 'linear-gradient(135deg, #ffc107, #e65100)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
+        <div style={{ fontSize: '40px' }}>💰</div>
+        <div style={{ fontSize: '36px', fontWeight: '800' }}>Rs. {orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0)}</div>
+        <div style={{ fontSize: '14px', opacity: 0.9 }}>Total Revenue</div>
+      </div>
+      <div style={{ background: 'linear-gradient(135deg, #dc3545, #7b1a25)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
+        <div style={{ fontSize: '40px' }}>⚠️</div>
+        <div style={{ fontSize: '36px', fontWeight: '800' }}>{medicines.filter(m => m.stock < 10).length}</div>
+        <div style={{ fontSize: '14px', opacity: 0.9 }}>Low Stock Alert</div>
+      </div>
+    </div>
+
+    {/* Charts Row 1 */}
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px', marginBottom: '20px' }}>
+
+      {/* Category Distribution - Pie Chart */}
+      <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
+        <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>🥧 Medicine Category Distribution</h3>
+        <Pie data={{
+          labels: [...new Set(medicines.map(m => m.category))],
+          datasets: [{
+            data: [...new Set(medicines.map(m => m.category))].map(cat => medicines.filter(m => m.category === cat).length),
+            backgroundColor: ['#1a73e8', '#28a745', '#ffc107', '#dc3545', '#6a1b9a', '#00bcd4', '#ff5722', '#607d8b', '#e91e63', '#4caf50'],
+            borderWidth: 2
+          }]
+        }} />
+      </div>
+
+      {/* Order Status - Doughnut Chart */}
+      <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
+        <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>🍩 Order Status Overview</h3>
+        <Doughnut data={{
+          labels: ['Pending', 'Processing', 'Out for Delivery', 'Delivered'],
+          datasets: [{
+            data: [
+              orders.filter(o => o.status === 'Pending').length,
+              orders.filter(o => o.status === 'Processing').length,
+              orders.filter(o => o.status === 'Out for Delivery').length,
+              orders.filter(o => o.status === 'Delivered').length
+            ],
+            backgroundColor: ['#ffc107', '#1a73e8', '#ff5722', '#28a745'],
+            borderWidth: 2
+          }]
+        }} />
+      </div>
+    </div>
+
+    {/* Charts Row 2 */}
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px', marginBottom: '20px' }}>
+
+      {/* Price Analysis - Bar Chart */}
+      <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
+        <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>📊 Price Analysis by Category</h3>
+        <Bar data={{
+          labels: [...new Set(medicines.map(m => m.category))],
+          datasets: [{
+            label: 'Average Price (Rs.)',
+            data: [...new Set(medicines.map(m => m.category))].map(cat => {
+              const catMeds = medicines.filter(m => m.category === cat)
+              return Math.round(catMeds.reduce((sum, m) => sum + m.price, 0) / catMeds.length)
+            }),
+            backgroundColor: '#1a73e8',
+            borderRadius: 8
+          }]
+        }} options={{ plugins: { legend: { display: false } } }} />
+      </div>
+
+      {/* Stock Levels - Bar Chart */}
+      <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
+        <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>📦 Stock Levels</h3>
+        <Bar data={{
+          labels: medicines.map(m => m.name),
+          datasets: [{
+            label: 'Stock',
+            data: medicines.map(m => m.stock),
+            backgroundColor: medicines.map(m => m.stock < 10 ? '#dc3545' : m.stock < 30 ? '#ffc107' : '#28a745'),
+            borderRadius: 6
+          }]
+        }} options={{ plugins: { legend: { display: false } }, scales: { x: { ticks: { maxRotation: 45 } } } }} />
+      </div>
+    </div>
+
+    {/* Revenue Line Chart */}
+    <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)', marginBottom: '20px' }}>
+      <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>📈 Revenue per Order</h3>
+      <Line data={{
+        labels: orders.map((o, i) => `Order #${o.id}`),
+        datasets: [{
+          label: 'Revenue (Rs.)',
+          data: orders.map(o => o.totalAmount || 0),
+          borderColor: '#1a73e8',
+          backgroundColor: 'rgba(26,115,232,0.1)',
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#1a73e8'
+        }]
+      }} options={{ plugins: { legend: { display: false } } }} />
+    </div>
+
+    {/* Low Stock Alert Table */}
+    <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
+      <h3 style={{ color: '#dc3545', marginBottom: '15px' }}>⚠️ Low Stock Alert (Stock &lt; 10)</h3>
+      {medicines.filter(m => m.stock < 10).length === 0 ? (
+        <p style={{ color: '#28a745', textAlign: 'center', padding: '20px' }}>✅ All medicines have sufficient stock!</p>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+          {medicines.filter(m => m.stock < 10).map(m => (
+            <div key={m.id} style={{ background: '#fff3f3', borderRadius: '10px', padding: '15px', borderLeft: '4px solid #dc3545' }}>
+              <div style={{ fontWeight: '700', color: '#333' }}>💊 {m.name}</div>
+              <div style={{ color: '#dc3545', fontWeight: '800', fontSize: '18px' }}>Stock: {m.stock}</div>
+              <div style={{ color: '#777', fontSize: '13px' }}>{m.category}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {/* Medicine Recommendations */}
+    <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)', marginTop: '20px' }}>
+      <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>🤖 Smart Recommendations</h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px' }}>
+        <div style={{ background: '#f0f7ff', borderRadius: '10px', padding: '15px' }}>
+          <div style={{ fontWeight: '700', color: '#1a73e8', marginBottom: '8px' }}>📊 Best Selling Category</div>
+          <div style={{ fontSize: '20px', fontWeight: '800' }}>
+            {(() => {
+              const cats = {}
+              orders.forEach(o => { cats[o.category] = (cats[o.category] || 0) + 1 })
+              const best = Object.keys(cats).sort((a, b) => cats[b] - cats[a])[0]
+              return best || (medicines.length > 0 ? medicines[0].category : 'N/A')
+            })()}
+          </div>
+        </div>
+        <div style={{ background: '#f0fff4', borderRadius: '10px', padding: '15px' }}>
+          <div style={{ fontWeight: '700', color: '#28a745', marginBottom: '8px' }}>💰 Avg Order Value</div>
+          <div style={{ fontSize: '20px', fontWeight: '800' }}>
+            Rs. {orders.length > 0 ? Math.round(orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0) / orders.length) : 0}
+          </div>
+        </div>
+        <div style={{ background: '#fff8f0', borderRadius: '10px', padding: '15px' }}>
+          <div style={{ fontWeight: '700', color: '#ff5722', marginBottom: '8px' }}>🔄 Reorder Needed</div>
+          <div style={{ fontSize: '20px', fontWeight: '800' }}>{medicines.filter(m => m.stock < 20).length} medicines</div>
+        </div>
+        <div style={{ background: '#fdf0ff', borderRadius: '10px', padding: '15px' }}>
+          <div style={{ fontWeight: '700', color: '#6a1b9a', marginBottom: '8px' }}>📋 Pending Prescriptions</div>
+          <div style={{ fontSize: '20px', fontWeight: '800' }}>{prescriptions.filter(p => p.status === 'PENDING').length}</div>
+        </div>
+        </div>
+        </div>
+      </div>
+    )}
+
 
       {/* Orders Tab */}
       {activeTab === 'orders' && (
