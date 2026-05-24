@@ -128,7 +128,7 @@ function Navbar({ darkMode, setDarkMode }) {
               cursor: 'pointer',
               fontSize: '16px',
               fontWeight: 'bold',
-              transition: 'all 0.3s ease',
+              transition: 'all 1.0s ease',
               boxShadow: darkMode
               ? '0 0 15px rgba(255,213,79,0.5)'
               : '0 0 15px rgba(106,27,154,0.5)'
