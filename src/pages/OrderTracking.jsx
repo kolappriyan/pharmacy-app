@@ -84,7 +84,7 @@ function OrderTracking() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '40px auto', padding: '30px' }}>
-      <h2 style={{ color: '#2c7be5' }}>📦 Order Tracking</h2>
+      <h2 style={{ color: '#2c7be5' }}> Order Tracking</h2>
 
       {/* Search */}
       <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>

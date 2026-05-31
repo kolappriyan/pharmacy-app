@@ -191,14 +191,14 @@ function Home() {
             borderRadius: '50px', textDecoration: 'none', fontWeight: '800',
             fontSize: 'clamp(14px, 2.5vw, 18px)', boxShadow: '0 5px 20px rgba(0,0,0,0.2)'
           }}>
-            💊 Shop Now
+             Shop Now
           </Link>
           <Link to="/register" style={{
             padding: '14px 35px', background: 'transparent', color: 'white',
             borderRadius: '50px', textDecoration: 'none', fontWeight: '800',
             fontSize: 'clamp(14px, 2.5vw, 18px)', border: '2px solid white'
           }}>
-            📝 Register Free
+             Register Free
           </Link>
         </div>
       </div>

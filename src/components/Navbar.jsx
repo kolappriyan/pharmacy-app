@@ -78,13 +78,13 @@ function Navbar({ darkMode, setDarkMode }) {
         <div style={{ display: 'flex', gap: '5px', alignItems: 'center', '@media(maxWidth:768px)': { display: 'none' } }}
           className="desktop-menu">
           <Link to="/" style={linkStyle} onMouseEnter={e => e.target.style.background='rgba(255,255,255,0.2)'}
-            onMouseLeave={e => e.target.style.background='transparent'}>🏠 Home</Link>
+            onMouseLeave={e => e.target.style.background='transparent'}> Home</Link>
           <Link to="/medicines" style={linkStyle} onMouseEnter={e => e.target.style.background='rgba(255,255,255,0.2)'}
-            onMouseLeave={e => e.target.style.background='transparent'}>💊 Medicines</Link>
+            onMouseLeave={e => e.target.style.background='transparent'}> Medicines</Link>
           <Link to="/cart" style={{ ...linkStyle, position: 'relative' }}
             onMouseEnter={e => e.target.style.background='rgba(255,255,255,0.2)'}
             onMouseLeave={e => e.target.style.background='transparent'}>
-            🛒 Cart
+             Cart
             {totalItems > 0 && (
               <span style={{ position: 'absolute', top: '-2px', right: '-2px', background: '#ff4444',
                 color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '11px',
@@ -95,7 +95,7 @@ function Navbar({ darkMode, setDarkMode }) {
           </Link>
           <Link to="/track-order" style={{ ...linkStyle, color: '#ffd54f' }}
             onMouseEnter={e => e.target.style.background='rgba(255,255,255,0.2)'}
-            onMouseLeave={e => e.target.style.background='transparent'}>📦 Track Order</Link>
+            onMouseLeave={e => e.target.style.background='transparent'}> Track Order</Link>
 
           {user && window.location.pathname !== '/admin' && (
             <span style={{ color: '#a5d6a7', fontWeight: '600', fontSize: '14px', padding: '0 8px' }}>
@@ -160,13 +160,13 @@ function Navbar({ darkMode, setDarkMode }) {
           position: 'fixed', top: '65px', left: 0, right: 0, zIndex: 999,
           boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}
           className="mobile-menu">
-          <Link to="/" style={mobileLinkStyle} onClick={() => setMenuOpen(false)}>🏠 Home</Link>
-          <Link to="/medicines" style={mobileLinkStyle} onClick={() => setMenuOpen(false)}>💊 Medicines</Link>
+          <Link to="/" style={mobileLinkStyle} onClick={() => setMenuOpen(false)}> Home</Link>
+          <Link to="/medicines" style={mobileLinkStyle} onClick={() => setMenuOpen(false)}> Medicines</Link>
           <Link to="/cart" style={mobileLinkStyle} onClick={() => setMenuOpen(false)}>
-            🛒 Cart {totalItems > 0 && <span style={{ background: '#ff4444', color: 'white',
+             Cart {totalItems > 0 && <span style={{ background: '#ff4444', color: 'white',
               borderRadius: '50%', padding: '2px 7px', fontSize: '12px', marginLeft: '5px' }}>{totalItems}</span>}
           </Link>
-          <Link to="/track-order" style={{ ...mobileLinkStyle, color: '#ffd54f' }} onClick={() => setMenuOpen(false)}>📦 Track Order</Link>
+          <Link to="/track-order" style={{ ...mobileLinkStyle, color: '#ffd54f' }} onClick={() => setMenuOpen(false)}> Track Order</Link>
 
           {user ? (
             <>

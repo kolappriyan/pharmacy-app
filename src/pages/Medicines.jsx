@@ -103,15 +103,15 @@ function Medicines() {
             <h3 style={{ color: '#435b7a', marginBottom: '15px' }}>💊 {selectedMedicine.name}</h3>
             {medicineInfo[selectedMedicine.name] ? (
               <>
-                <p><strong>📋 Uses:</strong> {medicineInfo[selectedMedicine.name].uses}</p>
-                <p><strong>💉 Dosage:</strong> {medicineInfo[selectedMedicine.name].dosage}</p>
-                <p><strong>⚠️ Warning:</strong> {medicineInfo[selectedMedicine.name].warning}</p>
+                <p><strong> Uses:</strong> {medicineInfo[selectedMedicine.name].uses}</p>
+                <p><strong> Dosage:</strong> {medicineInfo[selectedMedicine.name].dosage}</p>
+                <p><strong> Warning:</strong> {medicineInfo[selectedMedicine.name].warning}</p>
               </>
             ) : (
               <p>Category: {selectedMedicine.category}</p>
             )}
-            <p><strong>💰 Price:</strong> Rs. {selectedMedicine.price}</p>
-            <p><strong>📦 Stock:</strong> {selectedMedicine.stock}</p>
+            <p><strong> Price:</strong> Rs. {selectedMedicine.price}</p>
+            <p><strong> Stock:</strong> {selectedMedicine.stock}</p>
           </div>
         </div>
       )}

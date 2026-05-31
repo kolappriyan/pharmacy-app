@@ -193,7 +193,7 @@ function AdminPanel() {
             </div>
             <div style={{ background: 'linear-gradient(135deg, #28a745, #1a6b30)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'down' }}>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>{orders.length}</div>
-              <div style={{ fontSize: '20px', opacity: 1.2 }}>Total Orders</div>
+              <div style={{ fontSize: '20px', opacity: 0.9 }}>Total Orders</div>
             </div>
             <div style={{ background: 'linear-gradient(135deg, #ffc107, #e65100)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>Rs. {orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0)}</div>
@@ -248,7 +248,7 @@ function AdminPanel() {
           </div>
 
           <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)', marginBottom: '20px' }}>
-            <h3 style={{ color: '#dc3545', marginBottom: '15px' }}>⚠️ Low Stock Alert (Stock &lt; 10)</h3>
+            <h2 style={{ color: '#dc3545', marginBottom: '15px' }}> Low Stock Alert (Stock &lt; 10)</h2>
             {medicines.filter(m => m.stock < 10).length === 0 ? (
               <p style={{ color: '#28a745', textAlign: 'center', padding: '20px' }}>✅ All medicines have sufficient stock!</p>
             ) : (
@@ -304,7 +304,7 @@ function AdminPanel() {
               <p style={{ margin: '4px 0', color: '#333', fontWeight: '600' }}>👤 {order.customerName}</p>
               <p style={{ margin: '4px 0', color: '#555', fontSize: '13px' }}>📞 {order.customerPhone}</p>
               <p style={{ margin: '4px 0', color: '#555', fontSize: '13px' }}>📍 {order.address}</p>
-              <p style={{ margin: '8px 0', color: '#28a745', fontWeight: '700' }}>💰 Rs. {order.totalAmount}</p>
+              <p style={{ margin: '8px 0', color: '#28a745', fontWeight: '700' }}> Rs. {order.totalAmount}</p>
               <select onChange={(e) => updateOrderStatus(order.id, e.target.value)} defaultValue={order.status}
                 style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '14px', marginTop: '5px' }}>
                 <option value="Pending">⏳ Pending</option>
