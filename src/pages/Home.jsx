@@ -45,7 +45,7 @@ function Home() {
           margin: '0 auto 40px',
           lineHeight: '1.8'
         }}>
-          Your trusted online pharmacy — order medicines, track deliveries, and stay healthy from the comfort of your home! 🏠
+          Your trusted online pharmacy — order medicines, track deliveries, and stay healthy from the comfort of your home! 
         </p>
         <Link to="/medicines" style={{
           display: 'inline-block',
@@ -107,7 +107,7 @@ function Home() {
       {/* Features Section */}
       <div style={{ padding: '20px 20px 50px', maxWidth: '1000px', margin: '0 auto' }}>
         <h2 style={{ textAlign: 'center', color: '#333', fontSize: 'clamp(20px, 4vw, 32px)', fontWeight: '800', marginBottom: '30px' }}>
-          Why Choose PharmaCare? 🌟
+          Why Choose PharmaCare? 
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
           {[
@@ -206,7 +206,7 @@ function Home() {
       {/* Footer */}
       <div style={{ background: '#1a1a2e', padding: '25px', textAlign: 'center' }}>
         <p style={{ color: '#aaa', margin: 0, fontSize: '14px' }}>
-          © 2025 PharmaCare 💊 | Made with ❤️ for your health
+          © 2026 PharmaCare  | Made with ❤️ for your health
         </p>
       </div>
 
