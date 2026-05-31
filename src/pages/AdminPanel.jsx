@@ -119,7 +119,7 @@ function AdminPanel() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '15px', marginBottom: '20px', flexWrap: 'wrap',alignItems: 'center' }}>
         {tabBtn('medicines', 'Medicines' )}
         {tabBtn('orders', 'Orders')}
         {tabBtn('prescriptions', 'Prescriptions')}
