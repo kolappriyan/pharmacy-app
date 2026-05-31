@@ -77,10 +77,10 @@ function Home() {
         marginTop: '-30px'
       }}>
         {[
-          { emoji: '💊', label: 'Medicines', value: count + '+' },
-          { emoji: '🚚', label: 'Fast Delivery', value: '24hrs' },
-          { emoji: '👨‍⚕️', label: 'Trusted', value: '100%' },
-          { emoji: '⭐', label: 'Rating', value: '4.9★' },
+          {  label: 'Medicines', value: count + '+' },
+          {  label: 'Fast Delivery', value: '24hrs' },
+          {  label: 'Trusted', value: '100%' },
+          {  label: 'Rating', value: '4.7★' },
         ].map((stat, i) => (
           <div key={i} style={{
             background: 'white',
@@ -111,12 +111,12 @@ function Home() {
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
           {[
-            { emoji: '🔒', title: 'Secure Payments', desc: 'Your payment info is 100% safe with us', color: '#e3f2fd', border: '#1a73e8' },
-            { emoji: '📋', title: 'Prescription Upload', desc: 'Easy prescription upload for medicines', color: '#f3e5f5', border: '#9c27b0' },
-            { emoji: '📦', title: 'Order Tracking', desc: 'Track your order in real-time', color: '#e8f5e9', border: '#4caf50' },
-            { emoji: '💬', title: '24/7 Support', desc: 'We\'re always here to help you', color: '#fff3e0', border: '#ff9800' },
-            { emoji: '🎯', title: 'Wide Selection', desc: '500+ medicines from trusted brands', color: '#fce4ec', border: '#e91e63' },
-            { emoji: '⚡', title: 'Fast Delivery', desc: 'Get medicines delivered in 24 hours', color: '#e0f7fa', border: '#00bcd4' },
+            {  title: 'Secure Payments', desc: 'Your payment info is 100% safe with us', color: '#e3f2fd', border: '#1a73e8' },
+            {  title: 'Prescription Upload', desc: 'Easy prescription upload for medicines', color: '#f3e5f5', border: '#9c27b0' },
+            {  title: 'Order Tracking', desc: 'Track your order in real-time', color: '#e8f5e9', border: '#4caf50' },
+            {  title: '24/7 Support', desc: 'We\'re always here to help you', color: '#fff3e0', border: '#ff9800' },
+            {  title: 'Wide Selection', desc: '500+ medicines from trusted brands', color: '#fce4ec', border: '#e91e63' },
+            {  title: 'Fast Delivery', desc: 'Get medicines delivered in 24 hours', color: '#e0f7fa', border: '#00bcd4' },
           ].map((feature, i) => (
             <div key={i} style={{
               background: feature.color,

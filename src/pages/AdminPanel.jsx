@@ -83,7 +83,7 @@ function AdminPanel() {
             onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
             style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '2px solid #e0e0e0', boxSizing: 'border-box', fontSize: '16px', marginBottom: '10px' }} />
           {error && <p style={{ color: 'red', margin: '0 0 10px' }}>❌ {error}</p>}
-          <button onClick={handleLogin} style={{ width: '100%', padding: '13px', background: 'linear-gradient(135deg, #1a73e8, #6a1b9a)', color: 'white', border: 'none', borderRadius: '10px', fontSize: '16px', fontWeight: '700', cursor: 'pointer' }}>Login as Admin 🚀</button>
+          <button onClick={handleLogin} style={{ width: '100%', padding: '13px', background: 'linear-gradient(135deg, #1a73e8, #6a1b9a)', color: 'white', border: 'none', borderRadius: '10px', fontSize: '16px', fontWeight: '700', cursor: 'pointer' }}>Login as Admin </button>
         </div>
       </div>
     )
@@ -116,14 +116,6 @@ function AdminPanel() {
             <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>Prescriptions</div>
           </div>
         </div>
-      </div>
-
-      {/* Tabs */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
-        {tabBtn('medicines', 'Medicines', '💊')}
-        {tabBtn('orders', 'Orders', '📦')}
-        {tabBtn('prescriptions', 'Prescriptions', '📋')}
-        {tabBtn('dashboard', 'Dashboard', '📊')}
       </div>
 
       {/* Medicines Tab */}
