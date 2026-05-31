@@ -190,22 +190,19 @@ function AdminPanel() {
             <div style={{ background: 'linear-gradient(135deg, #1a73e8, #0d47a1)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
               <div style={{ fontSize: '40px' }}>💊</div>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>{medicines.length}</div>
-              <div style={{ fontSize: '14px', opacity: 0.9 }}>Total Medicines</div>
+              <div style={{ fontSize: '20px', opacity: 0.9 }}>Total Medicines</div>
             </div>
             <div style={{ background: 'linear-gradient(135deg, #28a745, #1a6b30)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
-              <div style={{ fontSize: '40px' }}>📦</div>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>{orders.length}</div>
-              <div style={{ fontSize: '14px', opacity: 0.9 }}>Total Orders</div>
+              <div style={{ fontSize: '20px', opacity: 0.9 }}>Total Orders</div>
             </div>
             <div style={{ background: 'linear-gradient(135deg, #ffc107, #e65100)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
-              <div style={{ fontSize: '40px' }}>💰</div>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>Rs. {orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0)}</div>
-              <div style={{ fontSize: '14px', opacity: 0.9 }}>Total Revenue</div>
+              <div style={{ fontSize: '20px', opacity: 0.9 }}>Total Revenue</div>
             </div>
             <div style={{ background: 'linear-gradient(135deg, #dc3545, #7b1a25)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
-              <div style={{ fontSize: '40px' }}>⚠️</div>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>{medicines.filter(m => m.stock < 10).length}</div>
-              <div style={{ fontSize: '14px', opacity: 0.9 }}>Low Stock Alert</div>
+              <div style={{ fontSize: '20px', opacity: 0.9 }}>Low Stock Alert</div>
             </div>
           </div>
 
@@ -278,15 +275,15 @@ function AdminPanel() {
                 </div>
               </div>
               <div style={{ background: '#f0fff4', borderRadius: '10px', padding: '15px' }}>
-                <div style={{ fontWeight: '700', color: '#28a745', marginBottom: '8px' }}>💰 Avg Order Value</div>
+                <div style={{ fontWeight: '700', color: '#28a745', marginBottom: '8px' }}> Avg Order Value</div>
                 <div style={{ fontSize: '20px', fontWeight: '800' }}>Rs. {orders.length > 0 ? Math.round(orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0) / orders.length) : 0}</div>
               </div>
               <div style={{ background: '#fff8f0', borderRadius: '10px', padding: '15px' }}>
-                <div style={{ fontWeight: '700', color: '#ff5722', marginBottom: '8px' }}>🔄 Reorder Needed</div>
+                <div style={{ fontWeight: '700', color: '#ff5722', marginBottom: '8px' }}>Reorder Needed</div>
                 <div style={{ fontSize: '20px', fontWeight: '800' }}>{medicines.filter(m => m.stock < 20).length} medicines</div>
               </div>
               <div style={{ background: '#fdf0ff', borderRadius: '10px', padding: '15px' }}>
-                <div style={{ fontWeight: '700', color: '#6a1b9a', marginBottom: '8px' }}>📋 Pending Prescriptions</div>
+                <div style={{ fontWeight: '700', color: '#6a1b9a', marginBottom: '8px' }}> Pending Prescriptions</div>
                 <div style={{ fontSize: '20px', fontWeight: '800' }}>{prescriptions.filter(p => p.status === 'PENDING').length}</div>
               </div>
             </div>
