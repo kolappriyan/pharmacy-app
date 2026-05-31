@@ -103,11 +103,11 @@ function AdminPanel() {
           <p style={{ color: 'rgba(255,255,255,0.8)', margin: 0, fontSize: '13px' }}>PharmaCare Dashboard</p>
         </div>
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-          <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
+          <div style={{ background: 'rgba(101, 81, 81, 0.42)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
             <div style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>{medicines.length}</div>
             <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>Medicines</div>
           </div>
-          <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
+          <div style={{ background: 'rgba(159, 145, 145, 0.2)', borderRadius: '10px', padding: '10px 15px', textAlign: 'center' }}>
             <div style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>{orders.length}</div>
             <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>Orders</div>
           </div>
