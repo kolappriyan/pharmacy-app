@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -8,6 +8,33 @@ import Medicines from './pages/Medicines'
 import Cart from './pages/Cart'
 import AdminPanel from './pages/AdminPanel'
 import OrderTracking from './pages/OrderTracking'
+
+function AppContent({ darkMode, toggleDarkMode, transitioning }) {
+  const location = useLocation()
+  const isAdmin = location.pathname === '/admin'
+
+  return (
+    <div style={{
+      transition: 'all 1.0s ease',
+      minHeight: '100vh',
+      background: darkMode
+        ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
+        : '#f5f7ff'
+    }}>
+      {!isAdmin && <Navbar darkMode={darkMode} setDarkMode={toggleDarkMode} />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/medicines" element={<Medicines />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/tracking" element={<OrderTracking />} />
+        <Route path="/track-order" element={<OrderTracking />} />
+      </Routes>
+    </div>
+  )
+}
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -29,7 +56,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Flash overlay animation */}
       {transitioning && (
         <div style={{
           position: 'fixed',
@@ -43,7 +69,6 @@ function App() {
         }} />
       )}
 
-      {/* Sun/Moon animation overlay */}
       {transitioning && (
         <div style={{
           position: 'fixed',
@@ -59,27 +84,8 @@ function App() {
         </div>
       )}
 
-      <div style={{
-        transition: 'all 1.0s ease',
-        minHeight: '100vh',
-        background: darkMode
-          ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
-          : '#f5f7ff'
-      }}>
-        <Navbar darkMode={darkMode} setDarkMode={toggleDarkMode} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/medicines" element={<Medicines />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/tracking" element={<OrderTracking />} />
-          <Route path="/track-order" element={<OrderTracking />} />
-        </Routes>
-      </div>
+      <AppContent darkMode={darkMode} toggleDarkMode={toggleDarkMode} transitioning={transitioning} />
 
-      {/* CSS Animations */}
       <style>{`
         @keyframes flashOverlay {
           0% { opacity: 0; }
@@ -88,22 +94,10 @@ function App() {
         }
 
         @keyframes popIcon {
-          0% { 
-            opacity: 0; 
-            transform: translate(-50%, -50%) scale(0.5); 
-          }
-          40% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1.3); 
-          }
-          70% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1); 
-          }
-          100% { 
-            opacity: 0; 
-            transform: translate(-50%, -50%) scale(1.5); 
-          }
+          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+          40% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+          70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
         }
 
         * {
@@ -114,23 +108,13 @@ function App() {
           transition: background 0.5s ease, color 0.5s ease !important;
         }
 
-        /* Dark mode scrollbar */
         :root {
           color-scheme: ${darkMode ? 'dark' : 'light'};
         }
 
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-          background: ${darkMode ? '#1a1a2e' : '#f0f0f0'};
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: ${darkMode ? '#6a1b9a' : '#1a73e8'};
-          border-radius: 10px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: ${darkMode ? '#1a1a2e' : '#f0f0f0'}; }
+        ::-webkit-scrollbar-thumb { background: ${darkMode ? '#6a1b9a' : '#1a73e8'}; border-radius: 10px; }
       `}</style>
     </BrowserRouter>
   )
