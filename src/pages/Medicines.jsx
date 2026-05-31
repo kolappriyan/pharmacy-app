@@ -93,7 +93,7 @@ function Medicines() {
 
   return (
     <div style={{ padding: '30px' }}>
-      <h2 style={{ color: '#2c7be5', fontSize: '40px' }}> Medicines</h2>
+      <h2 style={{ color: '#2c7be5', fontSize: '40px' ,fontStyle: 'bold'}}> Medicines</h2>
 
       {/* Popup Modal */}
       {selectedMedicine && (
