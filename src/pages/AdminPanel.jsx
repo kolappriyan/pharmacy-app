@@ -76,7 +76,6 @@ function AdminPanel() {
     return (
       <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #1a73e8, #6a1b9a)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
         <div style={{ background: 'white', borderRadius: '20px', padding: '40px', width: '100%', maxWidth: '400px', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
-          <div style={{ fontSize: '50px', marginBottom: '10px' }}>🔐</div>
           <h2 style={{ color: '#1a73e8', margin: '0 0 5px' }}>Admin Panel</h2>
           <p style={{ color: '#777', marginBottom: '25px' }}>Enter password to continue</p>
           <input type="password" placeholder="Enter admin password" value={password}
@@ -152,7 +151,7 @@ function AdminPanel() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px' }}>
               <input type="checkbox" id="prescription" checked={newMedicine.prescriptionRequired}
                 onChange={(e) => setNewMedicine({ ...newMedicine, prescriptionRequired: e.target.checked })} />
-              <label htmlFor="prescription" style={{ fontSize: '14px', color: '#555' }}>⚠️ Prescription Required</label>
+              <label htmlFor="prescription" style={{ fontSize: '14px', color: '#555' }}> Prescription Required</label>
             </div>
             <button onClick={handleAdd} style={{ padding: '11px 25px', background: 'linear-gradient(135deg, #28a745, #20874f)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '15px', fontWeight: '700' }}>➕ Add Medicine</button>
           </div>
@@ -169,11 +168,11 @@ function AdminPanel() {
                       <div style={{ fontSize: '30px', marginBottom: '5px' }}>💊</div>
                     )}
                     <h4 style={{ margin: '0 0 5px', color: '#333' }}>{medicine.name}</h4>
-                    <p style={{ margin: '3px 0', color: '#777', fontSize: '13px' }}>📁 {medicine.category}</p>
+                    <p style={{ margin: '3px 0', color: '#777', fontSize: '13px' }}> {medicine.category}</p>
                     <p style={{ margin: '3px 0', color: '#28a745', fontWeight: '700' }}>Rs. {medicine.price}</p>
                     <p style={{ margin: '3px 0', color: '#555', fontSize: '13px' }}>Stock: {medicine.stock}</p>
                     {medicine.prescriptionRequired && (
-                      <span style={{ fontSize: '11px', color: 'red' }}>⚠️ Prescription Required</span>
+                      <span style={{ fontSize: '11px', color: 'red' }}> Prescription Required</span>
                     )}
                   </div>
                   <button onClick={() => handleDelete(medicine.id)} style={{ padding: '7px 12px', background: '#ff4444', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '13px' }}>🗑️ Delete</button>
@@ -212,14 +211,14 @@ function AdminPanel() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px', marginBottom: '20px' }}>
             <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
-              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>🥧 Medicine Category Distribution</h3>
+              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}> Medicine Category Distribution</h3>
               <Pie data={{
                 labels: [...new Set(medicines.map(m => m.category))],
                 datasets: [{ data: [...new Set(medicines.map(m => m.category))].map(cat => medicines.filter(m => m.category === cat).length), backgroundColor: ['#1a73e8', '#28a745', '#ffc107', '#dc3545', '#6a1b9a', '#00bcd4', '#ff5722', '#607d8b', '#e91e63', '#4caf50'], borderWidth: 2 }]
               }} />
             </div>
             <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
-              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>🍩 Order Status Overview</h3>
+              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}> Order Status Overview</h3>
               <Doughnut data={{
                 labels: ['Pending', 'Processing', 'Out for Delivery', 'Delivered'],
                 datasets: [{ data: [orders.filter(o => o.status === 'Pending').length, orders.filter(o => o.status === 'Processing').length, orders.filter(o => o.status === 'Out for Delivery').length, orders.filter(o => o.status === 'Delivered').length], backgroundColor: ['#ffc107', '#1a73e8', '#ff5722', '#28a745'], borderWidth: 2 }]
@@ -229,14 +228,14 @@ function AdminPanel() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px', marginBottom: '20px' }}>
             <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
-              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>📊 Price Analysis by Category</h3>
+              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>Price Analysis by Category</h3>
               <Bar data={{
                 labels: [...new Set(medicines.map(m => m.category))],
                 datasets: [{ label: 'Average Price (Rs.)', data: [...new Set(medicines.map(m => m.category))].map(cat => { const catMeds = medicines.filter(m => m.category === cat); return Math.round(catMeds.reduce((sum, m) => sum + m.price, 0) / catMeds.length) }), backgroundColor: '#1a73e8', borderRadius: 8 }]
               }} options={{ plugins: { legend: { display: false } } }} />
             </div>
             <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
-              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>📦 Stock Levels</h3>
+              <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}> Stock Levels</h3>
               <Bar data={{
                 labels: medicines.map(m => m.name),
                 datasets: [{ label: 'Stock', data: medicines.map(m => m.stock), backgroundColor: medicines.map(m => m.stock < 10 ? '#dc3545' : m.stock < 30 ? '#ffc107' : '#28a745'), borderRadius: 6 }]
@@ -245,7 +244,7 @@ function AdminPanel() {
           </div>
 
           <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)', marginBottom: '20px' }}>
-            <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>📈 Revenue per Order</h3>
+            <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>Revenue per Order</h3>
             <Line data={{
               labels: orders.map(o => `Order #${o.id}`),
               datasets: [{ label: 'Revenue (Rs.)', data: orders.map(o => o.totalAmount || 0), borderColor: '#1a73e8', backgroundColor: 'rgba(26,115,232,0.1)', fill: true, tension: 0.4, pointBackgroundColor: '#1a73e8' }]
@@ -270,10 +269,10 @@ function AdminPanel() {
           </div>
 
           <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)' }}>
-            <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}>🤖 Smart Recommendations</h3>
+            <h3 style={{ color: '#1a73e8', marginBottom: '15px' }}> Smart Recommendations</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px' }}>
               <div style={{ background: '#f0f7ff', borderRadius: '10px', padding: '15px' }}>
-                <div style={{ fontWeight: '700', color: '#1a73e8', marginBottom: '8px' }}>📊 Best Selling Category</div>
+                <div style={{ fontWeight: '700', color: '#1a73e8', marginBottom: '8px' }}> Best Selling Category</div>
                 <div style={{ fontSize: '20px', fontWeight: '800' }}>
                   {(() => { const cats = {}; orders.forEach(o => { cats[o.category] = (cats[o.category] || 0) + 1 }); const best = Object.keys(cats).sort((a, b) => cats[b] - cats[a])[0]; return best || (medicines.length > 0 ? medicines[0].category : 'N/A') })()}
                 </div>
