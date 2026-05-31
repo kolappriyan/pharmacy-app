@@ -191,7 +191,7 @@ function AdminPanel() {
               <div style={{ fontSize: '36px', fontWeight: '800' }}>{medicines.length}</div>
               <div style={{ fontSize: '20px', opacity: 0.9 }}>Total Medicines</div>
             </div>
-            <div style={{ background: 'linear-gradient(135deg, #28a745, #1a6b30)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'center' }}>
+            <div style={{ background: 'linear-gradient(135deg, #28a745, #1a6b30)', borderRadius: '15px', padding: '20px', color: 'white', textAlign: 'down' }}>
               <div style={{ fontSize: '36px', fontWeight: '800' }}>{orders.length}</div>
               <div style={{ fontSize: '20px', opacity: 1.2 }}>Total Orders</div>
             </div>
