@@ -77,10 +77,10 @@ function Home() {
         marginTop: '-30px'
       }}>
         {[
-          {  label: 'Medicines', value: count + '+' },
-          {  label: 'Fast Delivery', value: '24hrs' },
-          {  label: 'Trusted', value: '100%' },
-          {  label: 'Rating', value: '4.7★' },
+          { emoji: '💊', label: 'Medicines', value: count + '+' },
+          { emoji: '🚚', label: 'Fast Delivery', value: '24hrs' },
+          { emoji: '👨‍⚕️', label: 'Trusted', value: '100%' },
+          { emoji: '⭐', label: 'Rating', value: '4.7★' },
         ].map((stat, i) => (
           <div key={i} style={{
             background: 'white',

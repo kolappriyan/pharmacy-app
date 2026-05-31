@@ -118,6 +118,14 @@ function AdminPanel() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+        {tabBtn('medicines', 'Medicines' )}
+        {tabBtn('orders', 'Orders')}
+        {tabBtn('prescriptions', 'Prescriptions')}
+        {tabBtn('dashboard', 'Dashboard')}
+      </div>
+
       {/* Medicines Tab */}
       {activeTab === 'medicines' && (
         <div>
