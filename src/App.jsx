@@ -37,7 +37,7 @@ function AppContent({ darkMode, toggleDarkMode, transitioning }) {
         <Route path="/register" element={<Register />} />
         <Route path="/medicines" element={<Medicines />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin" element={<AdminPanel toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
         <Route path="/tracking" element={<OrderTracking />} />
         <Route path="/track-order" element={<OrderTracking />} />
       </Routes>

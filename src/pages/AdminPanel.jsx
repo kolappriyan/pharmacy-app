@@ -3,7 +3,7 @@ import { Bar, Line, Pie, Doughnut } from 'react-chartjs-2'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend } from 'chart.js'
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend)
 
-function AdminPanel() {
+function AdminPanel({ toggleDarkMode, darkMode }) {
   const [password, setPassword] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [error, setError] = useState('')
@@ -119,12 +119,17 @@ function AdminPanel() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '15px', marginBottom: '20px', flexWrap: 'wrap',alignItems: 'center' }}>
-        {tabBtn('medicines', 'Medicines' )}
-        {tabBtn('orders', 'Orders')}
-        {tabBtn('prescriptions', 'Prescriptions')}
-        {tabBtn('dashboard', 'Dashboard')}
-      </div>
+<div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+    {tabBtn('medicines', 'Medicines')}
+    {tabBtn('orders', 'Orders' )}
+    {tabBtn('prescriptions', 'Prescriptions')}
+    {tabBtn('dashboard', 'Dashboard')}
+  </div>
+  <button onClick={toggleDarkMode} style={{ background: darkMode ? '#333' : '#f0f0f0', border: '2px solid #6a1b9a', borderRadius: '50px', padding: '8px 16px', cursor: 'pointer', fontSize: '18px' }}>
+    {darkMode ? '☀️' : '🌙'}
+  </button>
+</div>
 
       {/* Medicines Tab */}
       {activeTab === 'medicines' && (
