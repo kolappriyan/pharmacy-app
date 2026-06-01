@@ -22,6 +22,15 @@ function AppContent({ darkMode, toggleDarkMode, transitioning }) {
         : '#f5f7ff'
     }}>
       {!isAdmin && <Navbar darkMode={darkMode} setDarkMode={toggleDarkMode} />}
+      {isAdmin && (
+        <div style={{ position: 'fixed', top: '15px', right: '20px', zIndex: 999 }}>
+           <button
+           onClick={toggleDarkMode}
+           style={{ background: 'none', border: '2px solid #6a1b9a', borderRadius: '50px', padding: '8px 16px', cursor: 'pointer', fontSize: '20px', color: '#6a1b9a', fontWeight: 'bold' }}>
+            {darkMode ? '☀️' : '🌙'}
+            </button>
+            </div>
+          )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
