@@ -79,6 +79,12 @@ function Cart() {
       if (!orderRes.ok) throw new Error('Order failed')
       const orderData = await orderRes.json()
       localStorage.setItem('lastOrderId', orderData.id)
+      // Stock reduction
+for (const item of cartItems) {
+  await fetch(`https://pharmacy-backend-1-41kr.onrender.com/api/medicines/${item.id}/reduce-stock?quantity=${item.quantity}`, {
+    method: 'PUT'
+  })
+}
 
       if (prescription) {
         const formData = new FormData()
